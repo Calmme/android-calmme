@@ -17,7 +17,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 import kr.co.mooreung.R
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener{
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     // Firebase 인증
     private lateinit var firebaseAuth: FirebaseAuth
@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener{
     // Google client
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    //private const val TAG = "GoogleActivity"
     private val RC_SIGN_IN = 99
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,9 +95,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener{
             }
     }
 
-    // MainActivity로 이동
-    fun startMainActivity(user: FirebaseUser?) {
-        if(user !=null) {
+    // MainActivity 이동
+    private fun startMainActivity(user: FirebaseUser?) {
+        if (user != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -133,7 +132,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener{
     override fun onClick(v: View) {
         when (v.id) {
             R.id.signInButton -> signIn()
-            R.id.signOutButton -> signOut()
             R.id.disconnectButton -> revokeAccess()
         }
     }

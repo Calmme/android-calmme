@@ -2,7 +2,9 @@ package kr.co.mooreung.activity
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.FragmentTransaction
 import com.fxn.OnBubbleClickListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,11 +18,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var meditationFragment: MeditationFragment
     lateinit var communityFragment: CommunityFragment
     lateinit var settingsFragment: SettingsFragment
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main) // activity_main.xml에 존재하는 리소스를 액티비티에 연결
-    
+
         // 최초 시작 시 보여줄 Fragment 설정
         homeFragment = HomeFragment()
         supportFragmentManager
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.frameLayout, homeFragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
-        
+
         // 하단 Navigation 버튼에 대한 리스너 및 Fragment 호출 등록
         navigationBar.addBubbleListener(object : OnBubbleClickListener {
             override fun onBubbleClick(id: Int) {

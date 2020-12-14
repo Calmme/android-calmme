@@ -12,11 +12,11 @@
             android:id="@+id/meditation"
             android:icon="@drawable/ic_hearing"
             android:title="@string/meditation"
-            android:iconTint="@color/logger"/>
+            android:iconTint="@color/meditation"/>
     <item
             android:id="@+id/group"
             android:icon="@drawable/ic_group"
-            android:iconTint="@color/documents"
+            android:iconTint="@color/community"
             android:title="@string/community" />
 
     <item

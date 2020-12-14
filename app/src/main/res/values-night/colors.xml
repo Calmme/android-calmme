@@ -12,4 +12,10 @@
 
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+
+    <!-- Bottom navigation icon color -->
+    <color name="home">#ef8b80</color>
+    <color name="meditation">#ae94dd</color>
+    <color name="community">#75b9e7</color>
+    <color name="settings">#69dd9a</color>
 </resources>

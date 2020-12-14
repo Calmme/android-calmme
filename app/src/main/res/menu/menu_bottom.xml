@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/home"
+            android:checked="true"
+            android:iconTint="@color/home"/>
+
+    <item
+            android:id="@+id/meditation"
+            android:icon="@drawable/ic_hearing"
+            android:title="@string/meditation"
+            android:iconTint="@color/meditation"/>
+    <item
+            android:id="@+id/group"
+            android:icon="@drawable/ic_group"
+            android:iconTint="@color/community"
+            android:title="@string/community" />
+
+    <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_android_black_24dp_rotated"
+            android:iconTint="@color/settings"
+            android:title="@string/settings" />
+
+</menu>

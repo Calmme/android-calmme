@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,16 +20,15 @@
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="16dp"
         android:paddingLeft="40dp"
         android:paddingTop="8dp"
         android:paddingRight="40dp"
         android:paddingBottom="8dp"
+        app:bubbletab_custom_font="@font/kakao_bold"
         app:bubbletab_disabled_icon_color="@color/navigation_default_text"
-        app:bubbletab_custom_font="@font/kakao_regular"
         app:bubbletab_horizontal_padding="20dp"
         app:bubbletab_icon_size="20dp"
-        app:bubbletab_menuResource="@menu/bottom_menu"
+        app:bubbletab_menuResource="@menu/menu_bottom"
         app:bubbletab_title_size="12sp"
         app:bubbletab_vertical_padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />
