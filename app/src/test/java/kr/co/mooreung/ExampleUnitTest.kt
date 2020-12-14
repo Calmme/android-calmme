@@ -1,4 +1,4 @@
-package kr.co.mureung
+package kr.co.mooreung
 
 import org.junit.Test
 

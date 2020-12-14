@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "288529397896",
+    "project_id": "mooreung-7f413",
+    "storage_bucket": "mooreung-7f413.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288529397896:android:bc796a619a04186b95073d",
+        "android_client_info": {
+          "package_name": "kr.co.mooreung"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288529397896-evhl8e8i6pmjrupg3lf48id04d49kdc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.co.mooreung",
+            "certificate_hash": "1e74173bb470fdfdb080da6942920d84fdfe50a8"
+          }
+        },
+        {
+          "client_id": "288529397896-dqb757pb5rk6jbhsos6r93q20v52cald.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYdTKo4QE-bSwMZh7u9fqJZnp5kKqD2es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288529397896-dqb757pb5rk6jbhsos6r93q20v52cald.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
