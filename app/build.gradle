@@ -40,7 +40,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // Bubble navigation library implementation
+    // Bubble navigation
     implementation 'com.fxn769:bubbletabbar:1.0.5'
     implementation 'com.fxn769:ariana:1.0'
 
@@ -51,9 +51,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     // Heartrate scan
-//    implementation project(path: ':heartrateometer')
     implementation 'com.github.kibotu:Heart-Rate-Ometer:-SNAPSHOT'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation 'com.github.kibotu:KalmanRx:2.0.0'
+
+    // Bubble picker
+    implementation 'com.github.igalata:Bubble-Picker:v0.2.5'
 }

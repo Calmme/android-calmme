@@ -4,18 +4,23 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="background">#f0f0f0</color>
-
-    <color name="dark_background">#212121</color>
-
     <color name="navigation_default_text">#fff</color>
 
     <color name="black">#000000</color>
-    <color name="white">#ffffff</color>
 
     <!-- Bottom navigation icon color -->
     <color name="home">#ef8b80</color>
     <color name="meditation">#ae94dd</color>
     <color name="community">#75b9e7</color>
     <color name="settings">#69dd9a</color>
+
+    <!-- Bubble picker icon color -->
+    <color name="blueStart">#4EFFF3</color>
+    <color name="blueEnd">#0ca6f9</color>
+    <color name="purpleStart">#a369ff</color>
+    <color name="purpleEnd">#0e56ff</color>
+    <color name="roseStart">#FF6A00</color>
+    <color name="roseEnd">#ef0276</color>
+    <color name="greenStart">#a7f56e</color>
+    <color name="greenEnd">#11c612</color>
 </resources>

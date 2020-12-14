@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 import kr.co.mooreung.R
 import kr.co.mooreung.activity.HeartScanActivity
-import kr.co.mooreung.activity.LoginActivity
+import kr.co.mooreung.activity.PickerActivity
 
 class HomeFragment : Fragment() {
 
@@ -24,9 +22,14 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // 로그아웃 버튼
-        heartScan.setOnClickListener { view ->
+        // 심박수 측정 화면 버튼
+        heartScan.setOnClickListener {
             startActivity(Intent(context, HeartScanActivity::class.java))
+        }
+
+        // 콘텐츠 선택 화면 버튼
+        picker.setOnClickListener {
+            startActivity(Intent(context, PickerActivity::class.java))
         }
         super.onViewCreated(view, savedInstanceState)
     }
