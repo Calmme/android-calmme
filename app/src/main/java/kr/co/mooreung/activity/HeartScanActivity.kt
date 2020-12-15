@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
@@ -19,7 +20,6 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import com.github.mikephil.charting.utils.ColorTemplate
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_heartscan.*
 import kr.co.mooreung.R
@@ -46,33 +46,41 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         // 스케일, 드래그 설정
         heartChart.isDragEnabled = true
         heartChart.setScaleEnabled(true)
+        // 그리드 설정
         heartChart.setDrawGridBackground(false)
-        // if disabled, scaling can be done on x- and y-axis separately
+        // 줌 인아웃 설정
         heartChart.setPinchZoom(true)
+
         // 배경 색상 설정
         // heartChart.setBackgroundColor(Color.LTGRAY)
         val data = LineData()
         data.setValueTextColor(Color.BLACK)
         // add empty data
         heartChart.data = data
-        // get the legend (only possible after setting data)
+
+        // 개요 설정
         val l: Legend = heartChart.legend
         // modify the legend ...
-        l.form = LegendForm.LINE
-        l.textColor = Color.BLACK
+        l.form = LegendForm.CIRCLE
+        l.textColor = resources.getColor(R.color.colorAccent)
 
+        // X축 설정
         val xl: XAxis = heartChart.xAxis
         xl.textColor = Color.BLACK
         xl.setDrawGridLines(false)
         xl.setAvoidFirstLastClipping(true)
-        xl.isEnabled = true
+        xl.isEnabled = false
 
+        // Y축 좌측
         val leftAxis: YAxis = heartChart.axisLeft
         leftAxis.textColor = Color.BLACK
 //        leftAxis.axisMaximum = 100f
-//        leftAxis.axisMinimum = 0f
+//        leftAxis.axisMinimum = 30f
         leftAxis.setDrawGridLines(false)
+        leftAxis.setDrawAxisLine(false)
+        leftAxis.isEnabled = true
 
+        // Y축 우측
         val rightAxis: YAxis = heartChart.axisRight
         rightAxis.isEnabled = false
     }
@@ -98,7 +106,7 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
 
         // Thread 형태로 동작
         val bpmUpdates = HeartRateOmeter()
-            .withAverageAfterSeconds(10) // BPM 측정을 위한 캘리브리션 대기시간
+            .withAverageAfterSeconds(8) // BPM 측정을 위한 캘리브리션 대기시간
             .setFingerDetectionListener(this::onFingerChange)
             .bpmUpdates(preview)
             .subscribe({
@@ -155,7 +163,7 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         heartChart.notifyDataSetChanged()
 
         // 그래프 최대 출력 개수
-        heartChart.setVisibleXRangeMaximum(30f)
+        heartChart.setVisibleXRangeMaximum(15f)
         // chart.setVisibleYRange(30, AxisDependency.LEFT);
 
         // 마지막 지점으로 뷰 이동
@@ -166,19 +174,31 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         // AxisDependency.LEFT);
     }
 
+    // 그래프 설정
     private fun createSet(): LineDataSet {
-        val set = LineDataSet(null, "Dynamic Data")
+        val set = LineDataSet(null, "BPM")
+        set.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set.cubicIntensity = 0.2f
         set.axisDependency = AxisDependency.LEFT
-        set.color = ColorTemplate.PASTEL_COLORS[1]
-        set.setCircleColor(ColorTemplate.PASTEL_COLORS[1])
+        set.color = resources.getColor(R.color.colorAccent)
         set.lineWidth = 2f
+
+        // 점
+        set.setDrawCircles(false)
         set.circleRadius = 4f
-        set.fillAlpha = 65
-        set.fillColor = ColorTemplate.getHoloBlue()
-        set.highLightColor = Color.rgb(244, 117, 117)
-        set.valueTextColor = Color.WHITE
-        set.valueTextSize = 9f
+        set.setCircleColor(resources.getColor(R.color.colorAccent))
+        set.highLightColor = resources.getColor(R.color.colorAccent)
+
+
+        // 채우기
+        set.fillDrawable = ContextCompat.getDrawable(this, R.drawable.fade_red)
+        set.setDrawFilled(true)
+//        set.fillAlpha = 65
+//        set.fillColor = resources.getColor(R.color.colorAccent)
+        set.valueTextColor = resources.getColor(R.color.colorAccent)
+        set.valueTextSize = 16f
         set.setDrawValues(false)
+
         return set
     }
 
@@ -243,10 +263,12 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         }
     }
 
+    // 그래프 점이 선택되었을 때
     override fun onValueSelected(e: Entry, h: Highlight?) {
         Log.i("Entry selected", e.toString())
     }
 
+    // 아무것도 선택된 것이 없을 때
     override fun onNothingSelected() {
         Log.i("Nothing selected", "Nothing selected.")
     }
