@@ -16,7 +16,7 @@ import kr.co.mooreung.R
 import kr.co.mooreung.activity.LoginActivity
 import kr.co.mooreung.activity.MainActivity
 
-class SettingsFragment : Fragment(){
+class SettingsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +28,7 @@ class SettingsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // 로그아웃 버튼
-        signOutButton.setOnClickListener { view ->
+        signOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             // 현재 프래그먼트 삭제
             activity?.supportFragmentManager

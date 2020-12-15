@@ -2,9 +2,7 @@ package kr.co.mooreung.activity
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.FragmentTransaction
 import com.fxn.OnBubbleClickListener
 import kotlinx.android.synthetic.main.activity_main.*

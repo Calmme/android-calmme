@@ -2,27 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/home"
-            android:icon="@drawable/ic_home"
-            android:title="@string/home"
-            android:checked="true"
-            android:iconTint="@color/home"/>
+        android:id="@+id/home"
+        android:checked="true"
+        android:icon="@drawable/ic_home"
+        android:iconTint="@color/home"
+        android:title="@string/home" />
 
     <item
-            android:id="@+id/meditation"
-            android:icon="@drawable/ic_hearing"
-            android:title="@string/meditation"
-            android:iconTint="@color/meditation"/>
+        android:id="@+id/meditation"
+        android:icon="@drawable/ic_hearing"
+        android:iconTint="@color/meditation"
+        android:title="@string/meditation" />
     <item
-            android:id="@+id/group"
-            android:icon="@drawable/ic_group"
-            android:iconTint="@color/community"
-            android:title="@string/community" />
+        android:id="@+id/group"
+        android:icon="@drawable/ic_group"
+        android:iconTint="@color/community"
+        android:title="@string/community" />
 
     <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_android_black_24dp_rotated"
-            android:iconTint="@color/settings"
-            android:title="@string/settings" />
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_android_black_24dp_rotated"
+        android:iconTint="@color/settings"
+        android:title="@string/settings" />
 
 </menu>

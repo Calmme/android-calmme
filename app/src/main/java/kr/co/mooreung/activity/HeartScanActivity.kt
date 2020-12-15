@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
@@ -52,7 +51,7 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         heartChart.setPinchZoom(true)
 
         // 배경 색상 설정
-        // heartChart.setBackgroundColor(Color.LTGRAY)
+        // heartChart.setBackgroundColor(Color.RED)
         val data = LineData()
         data.setValueTextColor(Color.BLACK)
         // add empty data
@@ -62,7 +61,7 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         val l: Legend = heartChart.legend
         // modify the legend ...
         l.form = LegendForm.CIRCLE
-        l.textColor = resources.getColor(R.color.colorAccent)
+        l.textColor = ContextCompat.getColor(this, R.color.colorAccent)
 
         // X축 설정
         val xl: XAxis = heartChart.xAxis
@@ -106,7 +105,7 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
 
         // Thread 형태로 동작
         val bpmUpdates = HeartRateOmeter()
-            .withAverageAfterSeconds(8) // BPM 측정을 위한 캘리브리션 대기시간
+            .withAverageAfterSeconds(8) // BPM 측정을 위한 보정 대기시간
             .setFingerDetectionListener(this::onFingerChange)
             .bpmUpdates(preview)
             .subscribe({
@@ -180,14 +179,14 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
         set.cubicIntensity = 0.2f
         set.axisDependency = AxisDependency.LEFT
-        set.color = resources.getColor(R.color.colorAccent)
+        set.color = ContextCompat.getColor(this, R.color.colorAccent)
         set.lineWidth = 2f
 
         // 점
         set.setDrawCircles(false)
         set.circleRadius = 4f
-        set.setCircleColor(resources.getColor(R.color.colorAccent))
-        set.highLightColor = resources.getColor(R.color.colorAccent)
+        set.setCircleColor(ContextCompat.getColor(this, R.color.colorAccent))
+        set.highLightColor = ContextCompat.getColor(this, R.color.colorAccent)
 
 
         // 채우기
@@ -195,7 +194,7 @@ class HeartScanActivity : AppCompatActivity(), OnChartValueSelectedListener {
         set.setDrawFilled(true)
 //        set.fillAlpha = 65
 //        set.fillColor = resources.getColor(R.color.colorAccent)
-        set.valueTextColor = resources.getColor(R.color.colorAccent)
+        set.valueTextColor = ContextCompat.getColor(this, R.color.colorAccent)
         set.valueTextSize = 16f
         set.setDrawValues(false)
 

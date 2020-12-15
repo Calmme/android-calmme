@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.w("LoginActivity", "firebaseAuthWithGoogle 성공", task.exception)
-                    startMainActivity(firebaseAuth?.currentUser)
+                    startMainActivity(firebaseAuth.currentUser)
                 } else {
                     Log.w("LoginActivity", "firebaseAuthWithGoogle 실패", task.exception)
 //                    Snackbar.make(view, "로그인에 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
@@ -109,16 +109,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    // 로그아웃
-    private fun signOut() {
-        // Firebase sign out
-        firebaseAuth.signOut()
-
-        // Google sign out
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-            //updateUI(null)
-        }
-    }
 
     // 로그인 등록 해제
     private fun revokeAccess() {
