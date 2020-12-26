@@ -2,10 +2,23 @@ package kr.co.mooreung;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.TextureView;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -13,9 +26,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import kr.co.mooreung.activity.HeartrateActivity;
 
 public class OutputAnalyzer {
-    private final Activity activity;
+    private Activity activity;
+    private LineChart heartChart;
 
-    private final ChartDrawer chartDrawer;
+//    private final ChartDrawer chartDrawer;
 
     private MeasureStore store;
 
@@ -32,9 +46,9 @@ public class OutputAnalyzer {
 
     private final Handler mainHandler;
 
-    public OutputAnalyzer(Activity activity, TextureView graphTextureView, Handler mainHandler) {
+    public OutputAnalyzer(Activity activity, LineChart heartChart, Handler mainHandler) {
         this.activity = activity;
-        this.chartDrawer = new ChartDrawer(graphTextureView);
+        this.heartChart = heartChart;
         this.mainHandler = mainHandler;
     }
 
@@ -56,6 +70,7 @@ public class OutputAnalyzer {
         }
     }
 
+    // 심박수 측정 메인 함수
     public void measurePulse(TextureView textureView, CameraService cameraService) {
 
         // 20 times a second, get the amount of red on the picture.
@@ -107,8 +122,36 @@ public class OutputAnalyzer {
                         sendMessage(HeartrateActivity.MESSAGE_UPDATE_REALTIME, currentValue);
                     }
 
-                    // draw the chart on a separate thread.
-                    Thread chartDrawerThread = new Thread(() -> chartDrawer.draw(store.getStdValues()));
+                    // 분리된 스레드에서 심박수 결과 그래프로 출력
+//                    Thread chartDrawerThread = new Thread(() -> chartDrawer.draw(store.getStdValues()));
+                    Thread chartDrawerThread = new Thread(() -> {
+//                        HeartrateActivity.mContext.addEntry(1f * (measurementLength - millisUntilFinished - clipLength) / 1000f);
+//                        Log.d("log", String.valueOf(store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100));
+
+                        LineData data = heartChart.getData();
+                        ILineDataSet set = data.getDataSetByIndex(0);
+                        // set.addEntry(...); // can be called as well
+                        if (set == null) {
+                            set = createSet();
+                            data.addDataSet(set);
+                        }
+                        float bpm = store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100;
+                        data.addEntry(new Entry(set.getEntryCount(), bpm), 0);
+                        data.notifyDataChanged();
+
+                        // 차트 뷰에게 데이터가 변경되었음을 알림
+                        heartChart.notifyDataSetChanged();
+
+                        // 그래프 최대 출력 개수
+                        heartChart.setVisibleXRangeMaximum(15f);
+                        // chart.setVisibleYRange(30, AxisDependency.LEFT);
+
+                        // 마지막 지점으로 뷰 이동
+                        heartChart.moveViewToX(data.getEntryCount());
+
+                    });
+//                    Thread chartDrawerThread = new Thread(this::run);
+
                     chartDrawerThread.start();
                 });
                 thread.start();
@@ -178,6 +221,23 @@ public class OutputAnalyzer {
         };
 
         timer.start();
+    }
+
+    private LineDataSet createSet() {
+
+        LineDataSet set = new LineDataSet(null, "Dynamic Data");
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set.setColor(ColorTemplate.getHoloBlue());
+        set.setCircleColor(Color.WHITE);
+        set.setLineWidth(2f);
+        set.setCircleRadius(4f);
+        set.setFillAlpha(65);
+        set.setFillColor(ColorTemplate.getHoloBlue());
+        set.setHighLightColor(Color.rgb(244, 117, 117));
+        set.setValueTextColor(Color.WHITE);
+        set.setValueTextSize(9f);
+        set.setDrawValues(false);
+        return set;
     }
 
     public void stop() {

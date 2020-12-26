@@ -10,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 class ChartDrawer
 {
+
     private  final TextureView chartTextureView;
     private final Paint paint = new Paint();
     private final Paint fillWhite = new Paint();
@@ -29,6 +30,7 @@ class ChartDrawer
 
     }
 
+    // 그림 그리는 스레드 함수
     void draw(CopyOnWriteArrayList<Measurement<Float>> data) {
         Canvas chartCanvas = chartTextureView.lockCanvas();
 

@@ -2,7 +2,7 @@ package kr.co.mooreung;
 
 import java.util.Date;
 
-class Measurement<T> {
+public class Measurement<T> {
     final Date timestamp;
     final T measurement;
 
