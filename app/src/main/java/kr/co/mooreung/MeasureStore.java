@@ -1,7 +1,9 @@
-package eu.berdosi.app.heartbeat;
+package kr.co.mooreung;
 
 import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import kr.co.mooreung.Measurement;
 
 class MeasureStore {
     private final CopyOnWriteArrayList<Measurement<Integer>> measurements = new CopyOnWriteArrayList<>();

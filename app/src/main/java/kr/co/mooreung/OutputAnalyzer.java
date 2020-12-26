@@ -1,4 +1,4 @@
-package eu.berdosi.app.heartbeat;
+package kr.co.mooreung;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -10,7 +10,9 @@ import android.view.TextureView;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-class OutputAnalyzer {
+import kr.co.mooreung.activity.HeartrateActivity;
+
+public class OutputAnalyzer {
     private final Activity activity;
 
     private final ChartDrawer chartDrawer;
@@ -30,7 +32,7 @@ class OutputAnalyzer {
 
     private final Handler mainHandler;
 
-    OutputAnalyzer(Activity activity, TextureView graphTextureView, Handler mainHandler) {
+    public OutputAnalyzer(Activity activity, TextureView graphTextureView, Handler mainHandler) {
         this.activity = activity;
         this.chartDrawer = new ChartDrawer(graphTextureView);
         this.mainHandler = mainHandler;
@@ -54,7 +56,7 @@ class OutputAnalyzer {
         }
     }
 
-    void measurePulse(TextureView textureView, CameraService cameraService) {
+    public void measurePulse(TextureView textureView, CameraService cameraService) {
 
         // 20 times a second, get the amount of red on the picture.
         // detect local minimums, calculate pulse.
@@ -102,7 +104,7 @@ class OutputAnalyzer {
                                 detectedValleys,
                                 1f * (measurementLength - millisUntilFinished - clipLength) / 1000f);
 
-                        sendMessage(MainActivity.MESSAGE_UPDATE_REALTIME, currentValue);
+                        sendMessage(HeartrateActivity.MESSAGE_UPDATE_REALTIME, currentValue);
                     }
 
                     // draw the chart on a separate thread.
@@ -124,7 +126,7 @@ class OutputAnalyzer {
                         detectedValleys - 1,
                         1f * (valleys.get(valleys.size() - 1) - valleys.get(0)) / 1000f);
 
-                sendMessage(MainActivity.MESSAGE_UPDATE_REALTIME, currentValue);
+                sendMessage(HeartrateActivity.MESSAGE_UPDATE_REALTIME, currentValue);
 
                 StringBuilder returnValueSb = new StringBuilder();
                 returnValueSb.append(currentValue);
@@ -169,7 +171,7 @@ class OutputAnalyzer {
                     returnValueSb.append(activity.getString(R.string.row_separator));
                 }
 
-                sendMessage(MainActivity.MESSAGE_UPDATE_FINAL, returnValueSb.toString());
+                sendMessage(HeartrateActivity.MESSAGE_UPDATE_FINAL, returnValueSb.toString());
 
                 cameraService.stop();
             }
@@ -178,7 +180,7 @@ class OutputAnalyzer {
         timer.start();
     }
 
-    void stop() {
+    public void stop() {
         if (timer != null) {
             timer.cancel();
         }

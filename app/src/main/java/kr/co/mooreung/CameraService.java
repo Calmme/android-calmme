@@ -1,4 +1,4 @@
-package eu.berdosi.app.heartbeat;
+package kr.co.mooreung;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,7 +19,7 @@ import androidx.core.app.ActivityCompat;
 import java.util.Collections;
 import java.util.Objects;
 
-class CameraService {
+public class CameraService {
     private String cameraId;
     private final Activity activity;
     private CameraDevice cameraDevice;
@@ -27,11 +27,11 @@ class CameraService {
 
     private CaptureRequest.Builder previewCaptureRequestBuilder;
 
-    CameraService(Activity _activity) {
+    public CameraService(Activity _activity) {
         activity = _activity;
     }
 
-    void start(Surface previewSurface) {
+    public void start(Surface previewSurface) {
 
         CameraManager cameraManager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -103,7 +103,7 @@ class CameraService {
         }
     }
 
-    void stop() {
+    public void stop() {
         try {
             cameraDevice.close();
         } catch (Exception e) {

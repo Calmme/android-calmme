@@ -1,4 +1,4 @@
-package eu.berdosi.app.heartbeat;
+package kr.co.mooreung;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
