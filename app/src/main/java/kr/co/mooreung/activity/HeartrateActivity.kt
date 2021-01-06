@@ -58,7 +58,11 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     private var analyzer: OutputAnalyzer? = null
     override fun onResume() {
         super.onResume()
-        analyzer = OutputAnalyzer(this, heartChart, mainHandler)
+        heartChart.invalidate()
+        heartChart.clear()
+        heartChartCreate()
+
+        analyzer = OutputAnalyzer(this, mainHandler)
         val cameraTextureView = findViewById<TextureView>(R.id.textureView2)
         val previewSurfaceTexture = cameraTextureView.surfaceTexture
 
@@ -85,7 +89,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         super.onPause()
         cameraService.stop()
         if (analyzer != null) analyzer!!.stop()
-        analyzer = OutputAnalyzer(this, heartChart, mainHandler)
+        analyzer = OutputAnalyzer(this, mainHandler)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,53 +101,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
             REQUEST_CODE_CAMERA
         )
 
-        // 차트 그래프
-        heartChart.setOnChartValueSelectedListener(this)
-        // 차트 설명 텍스트 설정
-        heartChart.description.isEnabled = true
-        heartChart.description.text = "심박수 측정 그래프"
-        // 터치 제스쳐 설정
-        heartChart.setTouchEnabled(true)
-        // 스케일, 드래그 설정
-        heartChart.isDragEnabled = true
-        heartChart.setScaleEnabled(true)
-        // 그리드 설정
-        heartChart.setDrawGridBackground(false)
-        // 줌 인아웃 설정
-        heartChart.setPinchZoom(true)
-
-        // 배경 색상 설정
-        // heartChart.setBackgroundColor(Color.RED)
-        val data = LineData()
-        data.setValueTextColor(Color.BLACK)
-        // add empty data
-        heartChart.data = data
-
-        // 개요 설정
-        val l: Legend = heartChart.legend
-        // modify the legend ...
-        l.form = Legend.LegendForm.CIRCLE
-        l.textColor = ContextCompat.getColor(this, R.color.colorAccent)
-
-        // X축 설정
-        val xl: XAxis = heartChart.xAxis
-        xl.textColor = Color.BLACK
-        xl.setDrawGridLines(false)
-        xl.setAvoidFirstLastClipping(true)
-        xl.isEnabled = false
-
-        // Y축 좌측
-        val leftAxis: YAxis = heartChart.axisLeft
-        leftAxis.textColor = Color.BLACK
-//        leftAxis.axisMaximum = 100f
-//        leftAxis.axisMinimum = 30f
-        leftAxis.setDrawGridLines(false)
-        leftAxis.setDrawAxisLine(false)
-        leftAxis.isEnabled = true
-
-        // Y축 우측
-        val rightAxis: YAxis = heartChart.axisRight
-        rightAxis.isEnabled = false
+        heartChartCreate()
     }
 
     override fun onRequestPermissionsResult(
@@ -220,12 +178,59 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         return set
     }
 
+    private fun heartChartCreate() {
+        // 차트 그래프
+        heartChart.setOnChartValueSelectedListener(this)
+        // 차트 설명 텍스트 설정
+        heartChart.description.isEnabled = true
+        heartChart.description.text = "심박수 측정 그래프"
+        // 터치 제스쳐 설정
+        heartChart.setTouchEnabled(true)
+        // 스케일, 드래그 설정
+        heartChart.isDragEnabled = true
+        heartChart.setScaleEnabled(true)
+        // 그리드 설정
+        heartChart.setDrawGridBackground(false)
+        // 줌 인아웃 설정
+        heartChart.setPinchZoom(true)
+
+        // 배경 색상 설정
+        val data = LineData()
+        data.setValueTextColor(Color.BLACK)
+        heartChart.data = data
+
+        // 개요 설정
+        val l: Legend = heartChart.legend
+        // modify the legend ...
+        l.form = Legend.LegendForm.CIRCLE
+        l.textColor = ContextCompat.getColor(this, R.color.colorAccent)
+
+        // X축 설정
+        val xl: XAxis = heartChart.xAxis
+        xl.textColor = Color.BLACK
+        xl.setDrawGridLines(false)
+        xl.setAvoidFirstLastClipping(true)
+        xl.isEnabled = false
+
+        // Y축 좌측
+        val leftAxis: YAxis = heartChart.axisLeft
+        leftAxis.textColor = Color.BLACK
+//        leftAxis.axisMaximum = 100f
+//        leftAxis.axisMinimum = 0f
+        leftAxis.setDrawGridLines(false)
+        leftAxis.setDrawAxisLine(false)
+        leftAxis.isEnabled = true
+
+        // Y축 우측
+        val rightAxis: YAxis = heartChart.axisRight
+        rightAxis.isEnabled = false
+    }
+
     fun addEntry(bpm: Float) {
         val data: LineData = heartChart.data
         var set = data.getDataSetByIndex(0)
 
         if (set == null) {
-            Log.d(TAG, "set이 NULL이다!")
             set = createSet()
             data.addDataSet(set)
         }

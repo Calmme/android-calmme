@@ -18,7 +18,6 @@ import kr.co.mooreung.activity.HeartrateActivity;
 
 public class OutputAnalyzer {
     private final Activity activity;
-    private final LineChart heartChart;
     private MeasureStore store;
 
     // 측정 주기
@@ -39,9 +38,8 @@ public class OutputAnalyzer {
     private final Handler mainHandler;
 
     // 생성자
-    public OutputAnalyzer(Activity activity, LineChart heartChart, Handler mainHandler) {
+    public OutputAnalyzer(Activity activity, Handler mainHandler) {
         this.activity = activity;
-        this.heartChart = heartChart;
         this.mainHandler = mainHandler;
     }
 
@@ -149,8 +147,8 @@ public class OutputAnalyzer {
                 returnValueSb.append(currentValue);
                 returnValueSb.append(activity.getString(R.string.row_separator));
 
-                returnValueSb.append(activity.getString(R.string.raw_values));
-                returnValueSb.append(activity.getString(R.string.row_separator));
+//                returnValueSb.append(activity.getString(R.string.raw_values));
+//                returnValueSb.append(activity.getString(R.string.row_separator));
 
 
                 for (int stdValueIdx = 0; stdValueIdx < stdValues.size(); stdValueIdx++) {
