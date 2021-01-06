@@ -66,7 +66,6 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         val cameraTextureView = findViewById<TextureView>(R.id.textureView2)
         val previewSurfaceTexture = cameraTextureView.surfaceTexture
 
-
         // justShared is set if one clicks the share button.
         if (previewSurfaceTexture != null) {
             // this first appears when we close the application and switch back - TextureView isn't quite ready at the first onResume.
@@ -81,7 +80,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
                 )
             }
             cameraService.start(previewSurface)
-            analyzer!!.measurePulse(cameraTextureView, cameraService)
+            analyzer!!.measurePulse(cameraTextureView, cameraService, this)
         }
     }
 
@@ -198,6 +197,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
 
     // 그래프 설정
     fun createSet(): LineDataSet {
+        Log.d("Debug", "createSet")
         val set = LineDataSet(null, "BPM")
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
         set.cubicIntensity = 0.2f

@@ -1,6 +1,7 @@
 package kr.co.mooreung;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.CountDownTimer;
@@ -71,7 +72,7 @@ public class OutputAnalyzer {
     }
 
     // 심박수 측정 메인 함수
-    public void measurePulse(TextureView textureView, CameraService cameraService) {
+    public void measurePulse(TextureView textureView, CameraService cameraService, HeartrateActivity mContext) {
 
         // 20 times a second, get the amount of red on the picture.
         // detect local minimums, calculate pulse.
@@ -125,8 +126,9 @@ public class OutputAnalyzer {
                     // 분리된 스레드에서 심박수 결과 그래프로 출력
 //                    Thread chartDrawerThread = new Thread(() -> chartDrawer.draw(store.getStdValues()));
                     Thread chartDrawerThread = new Thread(() -> {
-//                        HeartrateActivity.mContext.addEntry(1f * (measurementLength - millisUntilFinished - clipLength) / 1000f);
-//                        Log.d("log", String.valueOf(store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100));
+                        mContext.addEntry(1f * (measurementLength - millisUntilFinished - clipLength) / 1000f);
+                        Log.d("Debug", String.valueOf(store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100));
+                     //   mContext.addEntry(store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100);
 
                         LineData data = heartChart.getData();
                         ILineDataSet set = data.getDataSetByIndex(0);
@@ -135,12 +137,13 @@ public class OutputAnalyzer {
                             set = createSet();
                             data.addDataSet(set);
                         }
+
                         float bpm = store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100;
                         data.addEntry(new Entry(set.getEntryCount(), bpm), 0);
                         data.notifyDataChanged();
 
                         // 차트 뷰에게 데이터가 변경되었음을 알림
-                        heartChart.notifyDataSetChanged();
+                       // heartChart.notifyDataSetChanged();
 
                         // 그래프 최대 출력 개수
                         heartChart.setVisibleXRangeMaximum(15f);
