@@ -3,14 +3,12 @@ package kr.co.mooreung.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
-import android.view.MenuItem
 import android.view.Surface
 import android.view.TextureView
 import android.view.View
@@ -19,7 +17,6 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -29,21 +26,20 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_heartrate.*
 import kotlinx.android.synthetic.main.activity_heartscan.*
-import kotlinx.android.synthetic.main.activity_heartscan.heartChart
 import kr.co.mooreung.CameraService
-import kr.co.mooreung.Measurement
 import kr.co.mooreung.OutputAnalyzer
 import kr.co.mooreung.R
-import java.util.concurrent.CopyOnWriteArrayList
 
 class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     OnChartValueSelectedListener {
+
+
+    private val TAG = HeartrateActivity::class.java.simpleName
+
     private val cameraService = CameraService(this)
     private val REQUEST_CODE_CAMERA = 0
     private var menuNewMeasurementEnabled = false
-    val mContext:Context = this
 
     @SuppressLint("HandlerLeak")
     private val mainHandler: Handler = object : Handler() {
@@ -85,6 +81,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     }
 
     override fun onPause() {
+        Log.d(TAG, "onPause()")
         super.onPause()
         cameraService.stop()
         if (analyzer != null) analyzer!!.stop()
@@ -92,6 +89,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate()")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heartrate)
         ActivityCompat.requestPermissions(
@@ -189,15 +187,13 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
 //    }
 
     companion object {
-        lateinit var mContext: HeartrateActivity
-
         const val MESSAGE_UPDATE_REALTIME = 1
         const val MESSAGE_UPDATE_FINAL = 2
     }
 
     // 그래프 설정
-    fun createSet(): LineDataSet {
-        Log.d("Debug", "createSet")
+    private fun createSet(): LineDataSet {
+
         val set = LineDataSet(null, "BPM")
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
         set.cubicIntensity = 0.2f
@@ -227,11 +223,13 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     fun addEntry(bpm: Float) {
         val data: LineData = heartChart.data
         var set = data.getDataSetByIndex(0)
-        // set.addEntry(...); // can be called as well
+
         if (set == null) {
+            Log.d(TAG, "set이 NULL이다!")
             set = createSet()
             data.addDataSet(set)
         }
+
         data.addEntry(Entry(set.entryCount.toFloat(), bpm), 0)
         data.notifyDataChanged()
 

@@ -1,9 +1,7 @@
 package kr.co.mooreung;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
@@ -11,15 +9,7 @@ import android.util.Log;
 import android.view.TextureView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -27,18 +17,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import kr.co.mooreung.activity.HeartrateActivity;
 
 public class OutputAnalyzer {
-    private Activity activity;
-    private LineChart heartChart;
-
-//    private final ChartDrawer chartDrawer;
-
+    private final Activity activity;
+    private final LineChart heartChart;
     private MeasureStore store;
 
+    // 측정 주기
     private final int measurementInterval = 45;
+    // 측정 길이?
     private final int measurementLength = 15000; // ensure the number of data points is the power of two
-    private final int clipLength = 3500;
+    private final int clipLength = 3500; // 3500
 
     private int detectedValleys = 0;
+
+    // 측정을 건너뛸 시간
     private int ticksPassed = 0;
 
     private final CopyOnWriteArrayList<Long> valleys = new CopyOnWriteArrayList<>();
@@ -47,6 +38,7 @@ public class OutputAnalyzer {
 
     private final Handler mainHandler;
 
+    // 생성자
     public OutputAnalyzer(Activity activity, LineChart heartChart, Handler mainHandler) {
         this.activity = activity;
         this.heartChart = heartChart;
@@ -83,9 +75,11 @@ public class OutputAnalyzer {
 
         timer = new CountDownTimer(measurementLength, measurementInterval) {
 
+            // 초당 카메라 화면 분석 및 심박수 결과 저장
             @Override
             public void onTick(long millisUntilFinished) {
-                // skip the first measurements, which are broken by exposure metering
+
+                // 설정한 측정 대기 시간에 도달하지 않았을 경우 함수 반환
                 if (clipLength > (++ticksPassed * measurementInterval)) return;
 
                 Thread thread = new Thread(() -> {
@@ -124,39 +118,16 @@ public class OutputAnalyzer {
                     }
 
                     // 분리된 스레드에서 심박수 결과 그래프로 출력
-//                    Thread chartDrawerThread = new Thread(() -> chartDrawer.draw(store.getStdValues()));
                     Thread chartDrawerThread = new Thread(() -> {
-                        mContext.addEntry(1f * (measurementLength - millisUntilFinished - clipLength) / 1000f);
-                        Log.d("Debug", String.valueOf(store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100));
-                     //   mContext.addEntry(store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100);
-
-                        LineData data = heartChart.getData();
-                        ILineDataSet set = data.getDataSetByIndex(0);
-                        // set.addEntry(...); // can be called as well
-                        if (set == null) {
-                            set = createSet();
-                            data.addDataSet(set);
-                        }
-
                         float bpm = store.getStdValues().get(store.getStdValues().size() - 1).measurement * 100;
-                        data.addEntry(new Entry(set.getEntryCount(), bpm), 0);
-                        data.notifyDataChanged();
-
-                        // 차트 뷰에게 데이터가 변경되었음을 알림
-                       // heartChart.notifyDataSetChanged();
-
-                        // 그래프 최대 출력 개수
-                        heartChart.setVisibleXRangeMaximum(15f);
-                        // chart.setVisibleYRange(30, AxisDependency.LEFT);
-
-                        // 마지막 지점으로 뷰 이동
-                        heartChart.moveViewToX(data.getEntryCount());
-
+                        Log.d("Debug", String.valueOf(bpm));
+                        mContext.addEntry(bpm);
                     });
-//                    Thread chartDrawerThread = new Thread(this::run);
 
                     chartDrawerThread.start();
                 });
+
+                // 측정 스레드 시
                 thread.start();
             }
 
@@ -177,23 +148,6 @@ public class OutputAnalyzer {
                 StringBuilder returnValueSb = new StringBuilder();
                 returnValueSb.append(currentValue);
                 returnValueSb.append(activity.getString(R.string.row_separator));
-
-                // look for "drops" of 0.15 - 0.75 in the value
-                // a drop may take 2-3 ticks.
-                // int dropCount = 0;
-                // for (int stdValueIdx = 4; stdValueIdx < stdValues.size(); stdValueIdx++) {
-                //     if (((stdValues.get(stdValueIdx - 2).measurement - stdValues.get(stdValueIdx).measurement) > dropHeight) &&
-                //             !((stdValues.get(stdValueIdx - 3).measurement - stdValues.get(stdValueIdx - 1).measurement) > dropHeight) &&
-                //            !((stdValues.get(stdValueIdx - 4).measurement - stdValues.get(stdValueIdx - 2).measurement) > dropHeight)
-                //    ) {
-                //        dropCount++;
-                //    }
-                // }
-
-                // returnValueSb.append(activity.getString(R.string.detected_pulse));
-                // returnValueSb.append(activity.getString(R.string.separator));
-                // returnValueSb.append((float) dropCount / ((float) (measurementLength - clipLength) / 1000f / 60f));
-                // returnValueSb.append(activity.getString(R.string.row_separator));
 
                 returnValueSb.append(activity.getString(R.string.raw_values));
                 returnValueSb.append(activity.getString(R.string.row_separator));
@@ -226,22 +180,6 @@ public class OutputAnalyzer {
         timer.start();
     }
 
-    private LineDataSet createSet() {
-
-        LineDataSet set = new LineDataSet(null, "Dynamic Data");
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set.setColor(ColorTemplate.getHoloBlue());
-        set.setCircleColor(Color.WHITE);
-        set.setLineWidth(2f);
-        set.setCircleRadius(4f);
-        set.setFillAlpha(65);
-        set.setFillColor(ColorTemplate.getHoloBlue());
-        set.setHighLightColor(Color.rgb(244, 117, 117));
-        set.setValueTextColor(Color.WHITE);
-        set.setValueTextSize(9f);
-        set.setDrawValues(false);
-        return set;
-    }
 
     public void stop() {
         if (timer != null) {
