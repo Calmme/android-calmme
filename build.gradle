@@ -28,12 +28,13 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
         //카카오 SDK repository 설정
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+
+        maven { url 'https://jitpack.io' }
+
     }
 }
-
 
 
 task clean(type: Delete) {
