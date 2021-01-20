@@ -59,6 +59,14 @@ dependencies {
 
     // Bubble picker
     implementation 'com.github.igalata:Bubble-Picker:v0.2.5'
+
+    //http 통신 라이브러리 retrofit2 사용
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.5'
+
+
 }
 
 android {
