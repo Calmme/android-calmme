@@ -50,9 +50,6 @@ dependencies {
     implementation 'com.github.kibotu:KalmanRx:2.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    // Bubble picker
-    implementation 'com.github.igalata:Bubble-Picker:v0.2.5'
-
     // Lottie animation
     implementation 'com.airbnb.android:lottie:3.6.0'
 }

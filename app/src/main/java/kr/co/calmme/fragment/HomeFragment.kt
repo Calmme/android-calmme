@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_home.*
 import kr.co.calmme.R
 import kr.co.calmme.activity.HeartrateActivity
-import kr.co.calmme.activity.PickerActivity
 
 class HomeFragment : Fragment() {
 
@@ -27,10 +26,6 @@ class HomeFragment : Fragment() {
             startActivity(Intent(context, HeartrateActivity::class.java))
         }
 
-        // 콘텐츠 선택 화면 버튼
-        picker.setOnClickListener {
-            startActivity(Intent(context, PickerActivity::class.java))
-        }
         super.onViewCreated(view, savedInstanceState)
     }
 }

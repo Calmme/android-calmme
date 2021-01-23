@@ -15,8 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="kr.co.calmme.activity.HeartrateActivity" />
+        <activity android:name="kr.co.calmme.activity.SelectCameraActivity" />
         <activity android:name="kr.co.calmme.activity.HeartScanActivity" />
-        <activity android:name="kr.co.calmme.activity.PickerActivity" />
         <activity android:name="kr.co.calmme.activity.LoginActivity" />
         <activity android:name="kr.co.calmme.activity.MainActivity" />
         <activity

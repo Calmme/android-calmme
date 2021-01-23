@@ -7,6 +7,7 @@
     <color name="navigation_default_text">#fff</color>
 
     <color name="black">#000000</color>
+    <color name="grey">#e6e6e6</color>
 
     <!-- Bottom navigation icon color -->
     <color name="home">#ef8b80</color>

@@ -5,6 +5,10 @@
     <string name="community">커뮤니티</string>
     <string name="settings">설정</string>
 
+    <string name="camera_title">카메라 확인</string>
+    <string name="camera_vertical">카메라가\n<b>수직</b>이에요</string>
+    <string name="camera_horizontal">카메라가\n<b>수평</b>이에요</string>
+
     <string name="output_hint">
         Please place your finger on the device\'s camera, covering the flash as well.\nAfter
         10 seconds, you can export the results with the Share button. \n\nThis utility works
