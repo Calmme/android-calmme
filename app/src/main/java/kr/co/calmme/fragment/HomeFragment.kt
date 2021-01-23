@@ -25,7 +25,6 @@ class HomeFragment : Fragment() {
         heartScan.setOnClickListener {
             startActivity(Intent(context, HeartrateActivity::class.java))
         }
-
         super.onViewCreated(view, savedInstanceState)
     }
 }
