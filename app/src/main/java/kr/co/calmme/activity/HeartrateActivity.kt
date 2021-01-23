@@ -215,8 +215,8 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         // Y축 좌측
         val leftAxis: YAxis = heartChart.axisLeft
         leftAxis.textColor = Color.BLACK
-//        leftAxis.axisMaximum = 100f
-//        leftAxis.axisMinimum = 0f
+        leftAxis.axisMaximum = 100f
+        leftAxis.axisMinimum = 20f
         leftAxis.setDrawGridLines(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.isEnabled = true
