@@ -1,4 +1,4 @@
-package kr.co.mooreung.activity
+package kr.co.calmme.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -21,7 +21,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_heartscan.*
-import kr.co.mooreung.R
+import kr.co.calmme.R
 import net.kibotu.heartrateometer.HeartRateOmeter
 import net.kibotu.kalmanrx.jama.Matrix
 import net.kibotu.kalmanrx.jkalman.JKalman

@@ -1,4 +1,4 @@
-package kr.co.mooreung.activity
+package kr.co.calmme.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -27,9 +27,9 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_heartscan.*
-import kr.co.mooreung.CameraService
-import kr.co.mooreung.OutputAnalyzer
-import kr.co.mooreung.R
+import kr.co.calmme.CameraService
+import kr.co.calmme.OutputAnalyzer
+import kr.co.calmme.R
 
 class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     OnChartValueSelectedListener {

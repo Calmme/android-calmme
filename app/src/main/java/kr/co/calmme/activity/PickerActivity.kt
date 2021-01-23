@@ -1,4 +1,4 @@
-package kr.co.mooreung.activity
+package kr.co.calmme.activity
 
 import android.graphics.Typeface
 import android.os.Build
@@ -11,7 +11,7 @@ import com.igalata.bubblepicker.adapter.BubblePickerAdapter
 import com.igalata.bubblepicker.model.BubbleGradient
 import com.igalata.bubblepicker.model.PickerItem
 import kotlinx.android.synthetic.main.activity_picker.*
-import kr.co.mooreung.R
+import kr.co.calmme.R
 
 
 class PickerActivity : AppCompatActivity() {
