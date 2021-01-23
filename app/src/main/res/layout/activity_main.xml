@@ -23,6 +23,7 @@
         android:paddingTop="8dp"
         android:paddingRight="40dp"
         android:paddingBottom="8dp"
+        android:background="@drawable/layout_primarylight_top_full_background"
         app:bubbletab_custom_font="@font/kakao_bold"
         app:bubbletab_disabled_icon_color="@color/navigation_default_text"
         app:bubbletab_horizontal_padding="20dp"

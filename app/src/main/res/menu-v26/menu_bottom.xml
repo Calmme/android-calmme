@@ -5,24 +5,24 @@
         android:id="@+id/home"
         android:checked="true"
         android:icon="@drawable/ic_home"
-        android:iconTint="@color/home"
+        android:iconTint="@color/white"
         android:title="@string/home" />
 
     <item
         android:id="@+id/meditation"
         android:icon="@drawable/ic_hearing"
-        android:iconTint="@color/meditation"
+        android:iconTint="@color/white"
         android:title="@string/meditation" />
     <item
         android:id="@+id/group"
         android:icon="@drawable/ic_group"
-        android:iconTint="@color/community"
+        android:iconTint="@color/white"
         android:title="@string/community" />
 
     <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_android_black_24dp_rotated"
-        android:iconTint="@color/settings"
+        android:iconTint="@color/white"
         android:title="@string/settings" />
 
 </menu>
