@@ -2,6 +2,7 @@ package kr.co.calmme
 
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.math.max
 
 internal class MeasureStore {
     private val measurements = CopyOnWriteArrayList<Measurement<Int>>()
@@ -27,8 +28,9 @@ internal class MeasureStore {
             val stdValues = CopyOnWriteArrayList<Measurement<Float>>()
             for (i in measurements.indices) {
                 var sum = 0
+                // 이동 평균 값 내기
                 for (rollingAverageCounter in 0 until rollingAverageSize) {
-                    sum += measurements[Math.max(0, i - rollingAverageCounter)].measurement
+                    sum += measurements[max(0, i - rollingAverageCounter)].measurement
                 }
                 val stdValue = Measurement(
                     measurements[i].timestamp,

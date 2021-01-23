@@ -5,13 +5,7 @@
     <string name="community">커뮤니티</string>
     <string name="settings">설정</string>
 
-    <string name="output_hint">
-        Please place your finger on the device\'s camera, covering the flash as well.\nAfter
-        10 seconds, you can export the results with the Share button. \n\nThis utility works
-        by measuring the amount of red it sees through the camera, and attempting to detect the
-        fluctuations. \nIt works better in a darkened room, and when the pressure on the camera
-        is constant. \nIn case there are multiple cameras on your device, make sure that most your
-        finger covers the entire field of view. </string>
+    <string name="output_hint">플래시를 가리고 장치 카메라에 손가락을 대고 10 초 후 공유 버튼으로 결과를 내보낼 수 있습니다. 이 유틸리티는 카메라를 통해 보이는 빨간색의 양을 측정하고 변동을 감지하려고 시도합니다. 어두운 방에서 그리고 카메라에 가해지는 압력이 일정 할 때 더 잘 작동합니다. 장치에 여러 대의 카메라가있는 경우 대부분의 손가락이 전체 시야를 가리도록하십시오.</string>
     <string name="output_header_template">Heart rate raw data as of %s</string>
     <string name="output_body_template">Final result:\n%s\nNormalized results and detected peaks:\n%s</string>
     <string name="output_detected_peaks_header">Detected Peaks:</string>
@@ -23,8 +17,6 @@
     <string name="cameraPermissionRequired">Camera permission is required for this application to work.</string>
     <string name="noFlashWarning">Measurement without flash is less reliable.</string>
     <string name="new_measurement">New Measurement</string>
-    <string name="export_result">Export Result</string>
-    <string name="export_details">Export Details</string>
     <plurals name="measurement_output_template">
         <item quantity="zero">Pulse: %2.1f (%d cycle in %2.1f seconds)</item>
         <item quantity="one">Pulse: %2.1f (%d cycle in %2.1f seconds)</item>

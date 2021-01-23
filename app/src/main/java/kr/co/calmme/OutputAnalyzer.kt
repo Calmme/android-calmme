@@ -28,19 +28,24 @@ class OutputAnalyzer     // 생성자
     private var ticksPassed = 0
     private val valleys = CopyOnWriteArrayList<Long>()
     private var timer: CountDownTimer? = null
+
+    // 저점 찾기
     private fun detectValley(): Boolean {
         val valleyDetectionWindowSize = 13
-        val subList = store!!.getLastStdValues(valleyDetectionWindowSize)
+        val subList = store!!.getLastStdValues(valleyDetectionWindowSize) // 마지막 13개 값 추출
+
+        // 만약 저장된 색상값이 13개 미만일 때
         return if (subList.size < valleyDetectionWindowSize) {
             false
+        // 이상일 때
         } else {
-            val referenceValue = subList[ceil((valleyDetectionWindowSize / 2f).toDouble())
+            val referenceValue = subList[ceil((valleyDetectionWindowSize / 2f).toDouble()) // 중간값 뽑아내고
                 .toInt()].measurement
-            for (measurement in subList) {
-                if (measurement.measurement < referenceValue) return false
+            for (measurement in subList) { // 13개값에서 탐색
+                if (measurement.measurement < referenceValue) return false // 최저점이 아니면 반환
             }
 
-            // filter out consecutive measurements due to too high measurement rate
+            // 평지 저점 거르기 (노확실)
             subList[ceil((valleyDetectionWindowSize / 2f).toDouble())
                 .toInt()].measurement != subList[ceil((valleyDetectionWindowSize / 2f).toDouble())
                 .toInt() - 1].measurement
@@ -56,19 +61,23 @@ class OutputAnalyzer     // 생성자
 
         // 20 times a second, get the amount of red on the picture.
         // detect local minimums, calculate pulse.
-        store = MeasureStore()
+        store = MeasureStore() // 측정 데이터 담는 오브젝트
         detectedValleys = 0
+
+        // 타이머 스레드 선언
         timer = object : CountDownTimer(measurementLength.toLong(), measurementInterval.toLong()) {
             // 초당 카메라 화면 분석 및 심박수 결과 저장
             override fun onTick(millisUntilFinished: Long) {
 
                 // 설정한 측정 대기 시간에 도달하지 않았을 경우 함수 반환
                 if (clipLength > ++ticksPassed * measurementInterval) return
+
+                // 타이머 스레드 안에서 내부 스레드 생성
                 val thread = Thread {
                     val currentBitmap = textureView.bitmap
                     val pixelCount = textureView.width * textureView.height
                     var measurement = 0
-                    val pixels = IntArray(pixelCount)
+                    val pixels = IntArray(pixelCount) // 픽셀 초기화
                     currentBitmap!!.getPixels(
                         pixels,
                         0,
@@ -79,17 +88,20 @@ class OutputAnalyzer     // 생성자
                         textureView.height
                     )
 
-                    // extract the red component
+                    // 빨간색 화면에대해서 픽셀 색상값 추출
                     // https://developer.android.com/reference/android/graphics/Color.html#decoding
                     for (pixelIndex in 0 until pixelCount) {
                         measurement += pixels[pixelIndex] shr 16 and 0xff
                     }
                     // max int is 2^31 (2147483647) , so width and height can be at most 2^11,
                     // as 2^8 * 2^11 * 2^11 = 2^30, just below the limit
-                    store!!.add(measurement)
+                    store!!.add(measurement) // 추출한 색상 값을 저장
+                    // 저점을 찾았으면 bpm 계
                     if (detectValley()) {
+
                         detectedValleys += 1
                         valleys.add(store!!.lastTimestamp.time)
+                        // 저점 다 찾으면,
                         // in 13 seconds (13000 milliseconds), I expect 15 valleys. that would be a pulse of 15 / 130000 * 60 * 1000 = 69
                         val currentValue = String.format(
                             Locale.getDefault(),
@@ -107,6 +119,7 @@ class OutputAnalyzer     // 생성자
                             detectedValleys,
                             1f * (measurementLength - millisUntilFinished - clipLength) / 1000f
                         )
+                        // 최종 계산된 bpm을 메인핸들러로 전달
                         sendMessage(HeartrateActivity.MESSAGE_UPDATE_REALTIME, currentValue)
                     }
 

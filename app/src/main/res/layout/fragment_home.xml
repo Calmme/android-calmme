@@ -28,34 +28,20 @@
         android:text="Heartrate Scan"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/picker"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <Button
-        android:id="@+id/picker"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_corner"
-        android:fontFamily="@font/kakao_bold"
-        android:text="Content Pick"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/heartScan" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieView"
-        android:layout_width="0dp"
-        android:layout_height="400dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:lottie_rawRes="@raw/main_background"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true" />
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:id="@+id/lottieView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="400dp"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:lottie_rawRes="@raw/main_background"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_loop="true" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
