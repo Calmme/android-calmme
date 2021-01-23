@@ -3,14 +3,12 @@ package kr.co.mooreung.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
-import android.view.MenuItem
 import android.view.Surface
 import android.view.TextureView
 import android.view.View
@@ -19,7 +17,6 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -29,21 +26,20 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_heartrate.*
 import kotlinx.android.synthetic.main.activity_heartscan.*
-import kotlinx.android.synthetic.main.activity_heartscan.heartChart
 import kr.co.mooreung.CameraService
-import kr.co.mooreung.Measurement
 import kr.co.mooreung.OutputAnalyzer
 import kr.co.mooreung.R
-import java.util.concurrent.CopyOnWriteArrayList
 
 class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     OnChartValueSelectedListener {
+
+
+    private val TAG = HeartrateActivity::class.java.simpleName
+
     private val cameraService = CameraService(this)
     private val REQUEST_CODE_CAMERA = 0
     private var menuNewMeasurementEnabled = false
-    val mContext:Context = this
 
     @SuppressLint("HandlerLeak")
     private val mainHandler: Handler = object : Handler() {
@@ -62,10 +58,13 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     private var analyzer: OutputAnalyzer? = null
     override fun onResume() {
         super.onResume()
-        analyzer = OutputAnalyzer(this, heartChart, mainHandler)
+        heartChart.invalidate()
+        heartChart.clear()
+        heartChartCreate()
+
+        analyzer = OutputAnalyzer(this, mainHandler)
         val cameraTextureView = findViewById<TextureView>(R.id.textureView2)
         val previewSurfaceTexture = cameraTextureView.surfaceTexture
-
 
         // justShared is set if one clicks the share button.
         if (previewSurfaceTexture != null) {
@@ -81,18 +80,20 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
                 )
             }
             cameraService.start(previewSurface)
-            analyzer!!.measurePulse(cameraTextureView, cameraService)
+            analyzer!!.measurePulse(cameraTextureView, cameraService, this)
         }
     }
 
     override fun onPause() {
+        Log.d(TAG, "onPause()")
         super.onPause()
         cameraService.stop()
         if (analyzer != null) analyzer!!.stop()
-        analyzer = OutputAnalyzer(this, heartChart, mainHandler)
+        analyzer = OutputAnalyzer(this, mainHandler)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate()")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heartrate)
         ActivityCompat.requestPermissions(
@@ -100,53 +101,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
             REQUEST_CODE_CAMERA
         )
 
-        // 차트 그래프
-        heartChart.setOnChartValueSelectedListener(this)
-        // 차트 설명 텍스트 설정
-        heartChart.description.isEnabled = true
-        heartChart.description.text = "심박수 측정 그래프"
-        // 터치 제스쳐 설정
-        heartChart.setTouchEnabled(true)
-        // 스케일, 드래그 설정
-        heartChart.isDragEnabled = true
-        heartChart.setScaleEnabled(true)
-        // 그리드 설정
-        heartChart.setDrawGridBackground(false)
-        // 줌 인아웃 설정
-        heartChart.setPinchZoom(true)
-
-        // 배경 색상 설정
-        // heartChart.setBackgroundColor(Color.RED)
-        val data = LineData()
-        data.setValueTextColor(Color.BLACK)
-        // add empty data
-        heartChart.data = data
-
-        // 개요 설정
-        val l: Legend = heartChart.legend
-        // modify the legend ...
-        l.form = Legend.LegendForm.CIRCLE
-        l.textColor = ContextCompat.getColor(this, R.color.colorAccent)
-
-        // X축 설정
-        val xl: XAxis = heartChart.xAxis
-        xl.textColor = Color.BLACK
-        xl.setDrawGridLines(false)
-        xl.setAvoidFirstLastClipping(true)
-        xl.isEnabled = false
-
-        // Y축 좌측
-        val leftAxis: YAxis = heartChart.axisLeft
-        leftAxis.textColor = Color.BLACK
-//        leftAxis.axisMaximum = 100f
-//        leftAxis.axisMinimum = 30f
-        leftAxis.setDrawGridLines(false)
-        leftAxis.setDrawAxisLine(false)
-        leftAxis.isEnabled = true
-
-        // Y축 우측
-        val rightAxis: YAxis = heartChart.axisRight
-        rightAxis.isEnabled = false
+        heartChartCreate()
     }
 
     override fun onRequestPermissionsResult(
@@ -190,14 +145,13 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
 //    }
 
     companion object {
-        lateinit var mContext: HeartrateActivity
-
         const val MESSAGE_UPDATE_REALTIME = 1
         const val MESSAGE_UPDATE_FINAL = 2
     }
 
     // 그래프 설정
-    fun createSet(): LineDataSet {
+    private fun createSet(): LineDataSet {
+
         val set = LineDataSet(null, "BPM")
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
         set.cubicIntensity = 0.2f
@@ -224,14 +178,63 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         return set
     }
 
+    private fun heartChartCreate() {
+        // 차트 그래프
+        heartChart.setOnChartValueSelectedListener(this)
+        // 차트 설명 텍스트 설정
+        heartChart.description.isEnabled = true
+        heartChart.description.text = "심박수 측정 그래프"
+        // 터치 제스쳐 설정
+        heartChart.setTouchEnabled(true)
+        // 스케일, 드래그 설정
+        heartChart.isDragEnabled = true
+        heartChart.setScaleEnabled(true)
+        // 그리드 설정
+        heartChart.setDrawGridBackground(false)
+        // 줌 인아웃 설정
+        heartChart.setPinchZoom(true)
+
+        // 배경 색상 설정
+        val data = LineData()
+        data.setValueTextColor(Color.BLACK)
+        heartChart.data = data
+
+        // 개요 설정
+        val l: Legend = heartChart.legend
+        // modify the legend ...
+        l.form = Legend.LegendForm.CIRCLE
+        l.textColor = ContextCompat.getColor(this, R.color.colorAccent)
+
+        // X축 설정
+        val xl: XAxis = heartChart.xAxis
+        xl.textColor = Color.BLACK
+        xl.setDrawGridLines(false)
+        xl.setAvoidFirstLastClipping(true)
+        xl.isEnabled = false
+
+        // Y축 좌측
+        val leftAxis: YAxis = heartChart.axisLeft
+        leftAxis.textColor = Color.BLACK
+        leftAxis.axisMaximum = 100f
+        leftAxis.axisMinimum = 20f
+        leftAxis.setDrawGridLines(false)
+        leftAxis.setDrawAxisLine(false)
+        leftAxis.isEnabled = true
+
+        // Y축 우측
+        val rightAxis: YAxis = heartChart.axisRight
+        rightAxis.isEnabled = false
+    }
+
     fun addEntry(bpm: Float) {
         val data: LineData = heartChart.data
         var set = data.getDataSetByIndex(0)
-        // set.addEntry(...); // can be called as well
+
         if (set == null) {
             set = createSet()
             data.addDataSet(set)
         }
+
         data.addEntry(Entry(set.entryCount.toFloat(), bpm), 0)
         data.notifyDataChanged()
 

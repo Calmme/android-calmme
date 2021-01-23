@@ -38,7 +38,7 @@ class MeasureStore {
                     new Measurement<>(
                             measurements.get(i).timestamp,
                             ((float)sum / rollingAverageSize - minimum ) / (maximum - minimum));
-            // sn
+            // 여기서 계속 값이 누적
             stdValues.add(stdValue);
         }
 
