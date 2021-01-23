@@ -1,4 +1,4 @@
-package kr.co.mooreung;
+package kr.co.calmme;
 
 import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;

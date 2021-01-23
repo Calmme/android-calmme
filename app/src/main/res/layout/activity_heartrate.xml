@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="afterDescendants"
     android:focusable="auto"
-    tools:context=".activity.HeartrateActivity">
+    tools:context="kr.co.calmme.activity.HeartrateActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

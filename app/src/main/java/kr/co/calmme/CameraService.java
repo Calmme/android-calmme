@@ -1,4 +1,4 @@
-package kr.co.mooreung;
+package kr.co.calmme;
 
 import android.Manifest;
 import android.app.Activity;

@@ -1,4 +1,4 @@
-package kr.co.mooreung;
+package kr.co.calmme;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -8,13 +8,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.TextureView;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.LineData;
-
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import kr.co.mooreung.activity.HeartrateActivity;
+import kr.co.calmme.activity.HeartrateActivity;
 
 public class OutputAnalyzer {
     private final Activity activity;

@@ -1,4 +1,4 @@
-package kr.co.mooreung.fragment
+package kr.co.calmme.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_home.*
-import kr.co.mooreung.R
-import kr.co.mooreung.activity.HeartScanActivity
-import kr.co.mooreung.activity.HeartrateActivity
-import kr.co.mooreung.activity.PickerActivity
+import kr.co.calmme.R
+import kr.co.calmme.activity.HeartrateActivity
+import kr.co.calmme.activity.PickerActivity
 
 class HomeFragment : Fragment() {
 

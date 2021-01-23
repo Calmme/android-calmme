@@ -1,4 +1,4 @@
-package kr.co.mooreung.activity
+package kr.co.calmme.activity
 
 
 import android.os.Bundle
@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.fxn.OnBubbleClickListener
 import kotlinx.android.synthetic.main.activity_main.*
-import kr.co.mooreung.R
-import kr.co.mooreung.fragment.*
+import kr.co.calmme.fragment.CommunityFragment
+import kr.co.calmme.R
+import kr.co.calmme.fragment.*
 
 class MainActivity : AppCompatActivity() {
 
