@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-interface testAPI {
+interface serverAPI {
 
     @FormUrlEncoded
     @POST("/test")
@@ -27,7 +27,7 @@ interface testAPI {
 
     companion object {
         private const val BASE_URL_API = "http://codejune.iptime.org:3000"
-        fun create(): testAPI {
+        fun create(): serverAPI {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -49,7 +49,7 @@ interface testAPI {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(testAPI::class.java)
+                .create(serverAPI::class.java)
         }
     }
 }

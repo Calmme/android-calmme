@@ -1,4 +1,4 @@
-package kr.co.mooreung.activity
+package kr.co.mooreung.activity.UserLogin
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kr.co.mooreung.R
 import kr.co.mooreung.ServerConnect.ResultTest
 import kr.co.mooreung.ServerConnect.URLs
-import kr.co.mooreung.ServerConnect.testAPI
+import kr.co.mooreung.ServerConnect.serverAPI
+import kr.co.mooreung.activity.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,8 +44,16 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        local_login_btn.setOnClickListener{
+            val intent = Intent(this, LocalLoginActivity::class.java)
+            startActivity(intent)
+            //나중에 생명주기 고려해서 수정하면 될듯
+            //finish()
+        }
+
         testButton.setOnClickListener {
-            val api = testAPI.create()
+            val api = serverAPI.create()
             api.postTestData("이거 넘어가면 POST 성공").enqueue(object : Callback<ResultTest> {
                 override fun onResponse(
                     call: Call<ResultTest>,
@@ -71,7 +80,8 @@ class LoginActivity : AppCompatActivity() {
             }
             else if (user != null) {
                 Log.e(TAG, URLs.URL_KAKAO_LOGIN)
-                Log.i(TAG, "사용자 정보 요청 성공" +
+                Log.i(
+                    TAG, "사용자 정보 요청 성공" +
                         "\n회원번호: ${user.id}" +
                         "\n이메일: ${user.kakaoAccount?.email}" +
                         "\n생일: ${user.kakaoAccount?.birthday}" +
