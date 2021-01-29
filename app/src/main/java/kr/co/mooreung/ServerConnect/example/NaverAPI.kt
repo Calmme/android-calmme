@@ -1,4 +1,4 @@
-package kr.co.mooreung.ServerConnect
+package kr.co.mooreung.ServerConnect.example
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

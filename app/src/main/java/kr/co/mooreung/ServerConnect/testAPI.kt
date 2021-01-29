@@ -8,34 +8,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-
 interface testAPI {
-    @GET("/")
-    fun getTestData(
-        /*
-        @Query("query") query: String,
-        @Query("display") display: Int? = null,
-        @Query("start") start: Int? = null
-         */
-    ): Call<ResultGetSearchNews>
 
     @FormUrlEncoded
-    @POST("")
-    fun transferPapago(
-        @Field("source") source: String,
-        @Field("target") target: String,
-        @Field("text") text: String
-    ): Call<ResultTransferPapago>
-
-    @FormUrlEncoded
-    @POST("/")
+    @POST("/test")
     fun postTestData(
         @Field("testData") testDate: String
     ): Call<ResultTest>
 
     companion object {
         private const val BASE_URL_API = "http://codejune.iptime.org:3000"
-
         fun create(): testAPI {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY

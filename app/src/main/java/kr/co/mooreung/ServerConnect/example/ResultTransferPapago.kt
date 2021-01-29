@@ -1,4 +1,4 @@
-package kr.co.mooreung.ServerConnect
+package kr.co.mooreung.ServerConnect.example
 
 data class ResultTransferPapago (
     var message: Message

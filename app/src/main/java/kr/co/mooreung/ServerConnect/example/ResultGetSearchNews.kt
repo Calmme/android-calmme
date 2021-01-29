@@ -1,4 +1,4 @@
-package kr.co.mooreung.ServerConnect
+package kr.co.mooreung.ServerConnect.example
 
 data class ResultGetSearchNews(
     var lastBuildDate: String = "",
