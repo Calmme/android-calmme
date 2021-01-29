@@ -16,6 +16,15 @@ interface testAPI {
         @Field("testData") testDate: String
     ): Call<ResultTest>
 
+    @FormUrlEncoded
+    @POST("/auth")
+    fun userSignin(
+        @Field("userEmail") userEmail: String,
+        @Field("userPassword") userPassword: String,
+        @Field("userNickname") userNickname: String
+    ): Call<UserData>
+
+
     companion object {
         private const val BASE_URL_API = "http://codejune.iptime.org:3000"
         fun create(): testAPI {

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity">
+    tools:context=".activity.UserLogin.LoginActivity">
 
 
     <ImageView
@@ -17,6 +17,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/local_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:text="LOCAL LOGIN"
+        app:layout_constraintBottom_toTopOf="@id/testButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kakao_login_btn"/>
   
     
     <Button
@@ -28,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/kakao_login_btn" />
+        app:layout_constraintTop_toBottomOf="@id/local_login_btn" />
 
         
 </androidx.constraintlayout.widget.ConstraintLayout>
