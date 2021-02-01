@@ -22,6 +22,7 @@ class LocalLoginActivity : AppCompatActivity() {
     var passwordText: EditText? = null
     var reEnterPasswordText: EditText? = null
     var nicknameText: EditText? = null
+    var ageText: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,7 @@ class LocalLoginActivity : AppCompatActivity() {
         passwordText = findViewById<EditText>(R.id.user_password)
         reEnterPasswordText = findViewById<EditText>(R.id.user_password_re)
         nicknameText = findViewById<EditText>(R.id.user_nickname)
+        ageText = findViewById<EditText>(R.id.user_age)
 
        signupButton.setOnClickListener {
            signup()
@@ -41,8 +43,8 @@ class LocalLoginActivity : AppCompatActivity() {
         signupButton!!.isEnabled = true
 //        setResult(Activity.RESULT_OK, null)
 //        finish()
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+       // startActivity(Intent(this, MainActivity::class.java))
+        //finish()
     }
 
     fun onSignupFailed() {
@@ -61,43 +63,33 @@ class LocalLoginActivity : AppCompatActivity() {
 
         signupButton!!.isEnabled = false
 
-        val progressDialog = ProgressDialog(this@LocalLoginActivity)
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("회원가입 진행")
-        progressDialog.show()
-
-
         val email = emailText!!.text.toString()
         val password = passwordText!!.text.toString()
        // val reEnterPassword = reEnterPasswordText!!.text.toString()
         val nickname = nicknameText!!.text.toString()
+        val age = ageText!!.text.toString()
 
         // TODO: Implement your own signup logic here.
 
-        android.os.Handler().postDelayed(
-            {
-                val api = serverAPI.create()
-                api.userSignin(email, password, nickname).enqueue(object : Callback<UserData> {
-                    override fun onResponse(
-                        call: Call<UserData>,
-                        response: Response<UserData>
-                    ) {
-                        Log.d("RESULT", "성공 : ${response.body()}")
-                        Log.d("HTTP TEST", "http 프로토콜 성공")
-                        progressDialog.dismiss()
-                        onSignupSuccess()
+        val api = serverAPI.create()
+        api.userSignin(email, password, nickname, age).enqueue(object : Callback<UserData> {
+            override fun onResponse(
+                call: Call<UserData>,
+                response: Response<UserData>
+            ) {
+                Log.d("RESULT", "성공 : ${response}")
+                Log.d("HTTP TEST", "http 프로토콜 성공")
+                onSignupSuccess()
 
-                    }
-                    override fun onFailure(call: Call<UserData>, t: Throwable) {
-                        // 실패
-                        Log.e("HTTP TEST", "FAIL")
-                        Log.e("SEE", call.toString())
-                        progressDialog.dismiss()
-                        onSignupFailed()
-                    }
-                })
-                progressDialog.dismiss()
-            }, 3000)
+            }
+            override fun onFailure(call: Call<UserData>, t: Throwable) {
+                // 실패
+                Log.e("HTTP TEST", "FAIL")
+                Log.e("SEE", call.toString())
+                onSignupFailed()
+            }
+        })
+
 
     }
 

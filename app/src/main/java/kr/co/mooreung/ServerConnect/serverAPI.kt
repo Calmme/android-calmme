@@ -17,11 +17,12 @@ interface serverAPI {
     ): Call<ResultTest>
 
     @FormUrlEncoded
-    @POST("/auth")
+    @POST("/auth/join")
     fun userSignin(
         @Field("userEmail") userEmail: String,
         @Field("userPassword") userPassword: String,
-        @Field("userNickname") userNickname: String
+        @Field("userNickname") userNickname: String,
+        @Field("userAge") userAge: String,
     ): Call<UserData>
 
 

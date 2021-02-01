@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="3dp"
-        android:paddingVertical="20dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:drawablePadding="20dp"
@@ -31,7 +30,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:paddingVertical="20dp"
         android:paddingStart="20dp"
         android:inputType="textPassword"
         android:hint="비밀번호"
@@ -48,7 +46,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:paddingVertical="20dp"
         android:paddingStart="20dp"
         android:inputType="textPassword"
         android:hint="비밀번호 확인"
@@ -65,21 +62,36 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:paddingVertical="20dp"
         android:paddingStart="20dp"
-        android:drawablePadding="20dp"
         android:inputType="text"
         android:hint="닉네임"
         android:importantForAutofill="no"
         android:textColorHint="#A6BCD0"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/signupButton"
+        app:layout_constraintBottom_toTopOf="@id/user_age"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_password_re"/>
 
 
-<Button
+    <EditText
+        android:id="@+id/user_age"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:paddingStart="20dp"
+        android:hint="나이"
+        android:inputType="number"
+        android:importantForAutofill="no"
+        android:textColorHint="#A6BCD0"
+        android:textSize="15dp"
+        app:layout_constraintTop_toBottomOf="@id/user_nickname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/signupButton"/>
+
+
+    <Button
         android:id="@+id/signupButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,6 +100,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/user_age" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
