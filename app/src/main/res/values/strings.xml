@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Calmme</string>
-    <string name="home">메인</string>
-    <string name="meditation">명상</string>
-    <string name="community">커뮤니티</string>
-    <string name="settings">설정</string>
+    <string name="main">메인</string>
+    <string name="challenge">챌린지</string>
+    <string name="analysis">분석</string>
+    <string name="setting">설정</string>
 
     <string name="camera_title">카메라 확인</string>
     <string name="camera_vertical">카메라가\n<b>수직</b>이에요</string>

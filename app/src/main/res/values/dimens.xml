@@ -3,4 +3,7 @@
     <dimen name="stroke_width">2dp</dimen>
 
     <dimen name="small_title">18dp</dimen>
+
+    <dimen name="navigation_height">51dp</dimen>
+
 </resources>

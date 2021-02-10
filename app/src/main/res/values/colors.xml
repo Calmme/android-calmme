@@ -25,4 +25,19 @@
     <color name="roseEnd">#ef0276</color>
     <color name="greenStart">#a7f56e</color>
     <color name="greenEnd">#11c612</color>
+
+
+    <!-- 변경된 칼라 코드 -->
+    <color name="yellow">#ffc063</color>
+    <color name="purple">#6c4cb0</color>
+    <color name="blue">#4c68b0</color>
+    <color name="skyBlue">#14e6c1</color>
+
+    <color name="lightBlack">#424242</color>
+    <color name="middleBlack">#212121</color>
+    <color name="originBlack">#131313</color>
+
+
+
+
 </resources>
