@@ -1,4 +1,4 @@
-package kr.co.mooreung.activity
+package kr.co.calmme.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -26,32 +26,48 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_heartscan.*
-import kr.co.mooreung.CameraService
-import kr.co.mooreung.OutputAnalyzer
-import kr.co.mooreung.R
+import kotlinx.android.synthetic.main.activity_heartrate.*
+import kr.co.calmme.CameraService
+import kr.co.calmme.OutputAnalyzer
+import kr.co.calmme.R
 
 class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
     OnChartValueSelectedListener {
 
 
-    private val TAG = HeartrateActivity::class.java.simpleName
-
-    private val cameraService = CameraService(this)
+    private val TAG = HeartrateActivity::class.java.simpleName  // Debug: Activity name tag
+    private val cameraService = CameraService(this)  // 카메라 서비스
     private val REQUEST_CODE_CAMERA = 0
     private var menuNewMeasurementEnabled = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate()")
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_heartrate)
+
+        // 카메라 사용 권한 요청
+        ActivityCompat.requestPermissions(
+            this, arrayOf(Manifest.permission.CAMERA),
+            REQUEST_CODE_CAMERA
+        )
+        heartChartCreate()
+    }
+
     @SuppressLint("HandlerLeak")
+    // 심박수 측정 스레드에서 넘어온 메세지 처리
     private val mainHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
+
+            // 심박수 측정 중일때
             if (msg.what == MESSAGE_UPDATE_REALTIME) {
+                    // 텍스트뷰에다가 심박수 rpm 뿌려줌
                 (findViewById<View>(R.id.textView) as TextView).text = msg.obj.toString()
             }
+            // 측정이 끝났을 때
             if (msg.what == MESSAGE_UPDATE_FINAL) {
+                    // 전체 측정 로그를 뿌려줌
                 (findViewById<View>(R.id.editText) as EditText).setText(msg.obj.toString())
-                // make sure menu items are enabled when it opens.
-                menuNewMeasurementEnabled = true
             }
         }
     }
@@ -63,7 +79,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         heartChartCreate()
 
         analyzer = OutputAnalyzer(this, mainHandler)
-        val cameraTextureView = findViewById<TextureView>(R.id.textureView2)
+        val cameraTextureView = findViewById<TextureView>(R.id.cameraView)
         val previewSurfaceTexture = cameraTextureView.surfaceTexture
 
         // justShared is set if one clicks the share button.
@@ -74,13 +90,14 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
             // show warning when there is no flash
             if (!this.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                 Snackbar.make(
-                    findViewById(R.id.constraintLayout),
+                    findViewById(R.id.heartView),
                     getString(R.string.noFlashWarning),
                     Snackbar.LENGTH_LONG
                 )
             }
-            cameraService.start(previewSurface)
-            analyzer!!.measurePulse(cameraTextureView, cameraService, this)
+
+            cameraService.start(previewSurface) // 카메라 서비스 시작
+            analyzer!!.measurePulse(cameraTextureView, cameraService, this) // 측정 시작
         }
     }
 
@@ -92,18 +109,6 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         analyzer = OutputAnalyzer(this, mainHandler)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "onCreate()")
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_heartrate)
-        ActivityCompat.requestPermissions(
-            this, arrayOf(Manifest.permission.CAMERA),
-            REQUEST_CODE_CAMERA
-        )
-
-        heartChartCreate()
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -113,7 +118,7 @@ class HeartrateActivity : Activity(), OnRequestPermissionsResultCallback,
         if (requestCode == REQUEST_CODE_CAMERA) {
             if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 Snackbar.make(
-                    findViewById(R.id.constraintLayout),
+                    findViewById(R.id.heartView),
                     getString(R.string.cameraPermissionRequired),
                     Snackbar.LENGTH_LONG
                 ).show()

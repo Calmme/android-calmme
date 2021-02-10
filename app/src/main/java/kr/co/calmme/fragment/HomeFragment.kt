@@ -1,4 +1,4 @@
-package kr.co.mooreung.fragment
+package kr.co.calmme.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_home.*
-import kr.co.mooreung.R
-import kr.co.mooreung.activity.HeartScanActivity
-import kr.co.mooreung.activity.HeartrateActivity
-import kr.co.mooreung.activity.PickerActivity
+import kr.co.calmme.R
+import kr.co.calmme.activity.HeartrateActivity
 
 class HomeFragment : Fragment() {
 
@@ -26,11 +24,6 @@ class HomeFragment : Fragment() {
         // 심박수 측정 화면 버튼
         heartScan.setOnClickListener {
             startActivity(Intent(context, HeartrateActivity::class.java))
-        }
-
-        // 콘텐츠 선택 화면 버튼
-        picker.setOnClickListener {
-            startActivity(Intent(context, PickerActivity::class.java))
         }
         super.onViewCreated(view, savedInstanceState)
     }
