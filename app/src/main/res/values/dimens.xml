@@ -6,4 +6,9 @@
 
     <dimen name="navigation_height">51dp</dimen>
 
+    <dimen name="challenge_tab_width">61dp</dimen>
+    <dimen name="challenge_tab_height">13dp</dimen>
+
+
+
 </resources>

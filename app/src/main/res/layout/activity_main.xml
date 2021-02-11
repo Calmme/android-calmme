@@ -21,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/navigation_height"
         android:background="@drawable/nav_top_stroke"
+        app:itemBackground="@drawable/nav_top_stroke"
         app:itemIconSize="33dp"
         app:itemIconTint="@xml/nav_select"
-        app:itemBackground="@drawable/nav_top_stroke"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_bottom" />
