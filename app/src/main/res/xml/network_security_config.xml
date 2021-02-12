@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">34.64.112.111</domain>
         <domain includeSubdomains="true">calmme.kr</domain>
+        <domain includeSubdomains="true">codejune.iptime.org</domain>
     </domain-config>
 </network-security-config>
