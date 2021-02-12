@@ -48,8 +48,8 @@ class ChallengeViewHolder(v: View) : RecyclerView.ViewHolder(v) {
     var view: View = v
 
     fun bind(item: Challenge) {
-        view.view.challenge_title.text = item.title
-
+        view.view.challenge_title.text = item.Name
+/*
         if(item.totalDay <= 3) {
             view.view.fourth.visibility = View.INVISIBLE
             view.view.fifth.visibility = View.INVISIBLE
@@ -58,7 +58,7 @@ class ChallengeViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         }
 
         if(item.completeNum > 0)
-            view.view.totalCount.text = item.completeNum.toString()
+            view.view.totalCount.text = item.completeNum.toString()*/
 //        view.place_tag.text = item.tag
     }
 }
