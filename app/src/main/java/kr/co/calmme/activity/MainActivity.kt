@@ -1,13 +1,16 @@
 package kr.co.calmme.activity
 
+
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
+import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import com.fxn.OnBubbleClickListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_settings.view.*
 import kr.co.calmme.fragment.CommunityFragment
 import kr.co.calmme.R
 import kr.co.calmme.fragment.*
@@ -16,12 +19,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     // Fragment 선언
     lateinit var homeFragment: HomeFragment
-    lateinit var meditationFragment: MeditationFragment
+    lateinit var challengeFragment: ChallengeFragment
     lateinit var communityFragment: CommunityFragment
     lateinit var settingsFragment: SettingsFragment
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main) // activity_main.xml에 존재하는 리소스를 액티비티에 연결
 
 //             val navigation: BottomNavigationView = findViewById(R.id.navigation)
@@ -91,7 +96,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.challenge -> {
                 val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentLayout, MeditationFragment())
+                transaction.replace(R.id.fragmentLayout, ChallengeFragment())
                 transaction.commit()
                 return true
             }

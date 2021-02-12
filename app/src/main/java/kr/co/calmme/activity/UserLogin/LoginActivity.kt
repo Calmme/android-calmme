@@ -68,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("SEE", call.toString())
                 }
             })
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 

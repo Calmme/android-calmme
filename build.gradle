@@ -7,7 +7,7 @@ buildscript {
 
     ext.compileSdkVer = 30
     ext.buildToolsVer = '30.0.2'
-    ext.minSdkVer = 21
+    ext.minSdkVer = 23
     ext.targetSdkVer = 30
 
     repositories {
