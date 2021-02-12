@@ -26,4 +26,6 @@
         <item quantity="one">Pulse: %2.1f (%d cycle in %2.1f seconds)</item>
         <item quantity="other">Pulse: %2.1f (%d cycles in %2.1f seconds)</item>
     </plurals>
+    <string name="kakao_app_key">b0ce1e85d647723f96ffec2be4ef7367</string>
+
 </resources>

@@ -1,6 +1,5 @@
 package kr.co.calmme.activity
 
-
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
