@@ -1,4 +1,4 @@
-package kr.co.mooreung.ServerConnect;
+package kr.co.mooreung.ServerConnect.Data;
 
 data class UserData (
         var error: String,

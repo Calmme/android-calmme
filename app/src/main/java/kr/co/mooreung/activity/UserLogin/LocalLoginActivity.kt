@@ -1,7 +1,5 @@
 package kr.co.mooreung.activity.UserLogin
 
-import android.app.ProgressDialog
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +7,8 @@ import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_local_login.*
 import kr.co.mooreung.R
-import kr.co.mooreung.ServerConnect.UserData
+import kr.co.mooreung.ServerConnect.Data.UserData
 import kr.co.mooreung.ServerConnect.serverAPI
-import kr.co.mooreung.activity.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
