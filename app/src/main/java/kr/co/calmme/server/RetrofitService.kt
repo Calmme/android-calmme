@@ -28,5 +28,5 @@ interface RetrofitService {
      * 4.모든 방 목록 조회
      */
     @GET("contents/list")
-    fun onGoingChallengeList(): Call<List<Challenge>>
+    fun onGoingChallengeList(): Call<CheckList>
 }

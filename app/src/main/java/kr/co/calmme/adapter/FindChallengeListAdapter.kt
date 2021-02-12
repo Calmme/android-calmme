@@ -1,15 +1,13 @@
-package kr.co.calmme.adapter
+package kr.co.calmme.adapter;
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_challenge.view.*
-import kotlinx.android.synthetic.main.view_challenge.view.*
 import kr.co.calmme.R
 import kr.co.calmme.model.Challenge
 
-class OngoingChallengeListAdapter(private val itemList: List<Challenge>) :
+class FindChallengeListAdapter(private val itemList: List<Challenge>) :
     RecyclerView.Adapter<ChallengeViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -42,4 +40,6 @@ class OngoingChallengeListAdapter(private val itemList: List<Challenge>) :
         this.itemClickListener = itemClickListener
     }
 }
+
+
 
