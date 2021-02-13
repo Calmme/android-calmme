@@ -7,7 +7,7 @@ buildscript {
 
     ext.compileSdkVer = 30
     ext.buildToolsVer = '30.0.2'
-    ext.minSdkVer = 21
+    ext.minSdkVer = 23
     ext.targetSdkVer = 30
 
     repositories {
@@ -27,6 +27,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //카카오 SDK repository 설정
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+
         maven { url 'https://jitpack.io' }
         mavenCentral()
         maven {
@@ -34,6 +37,7 @@ allprojects {
         }
     }
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

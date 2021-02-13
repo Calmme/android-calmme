@@ -26,4 +26,20 @@
         <item quantity="one">Pulse: %2.1f (%d cycle in %2.1f seconds)</item>
         <item quantity="other">Pulse: %2.1f (%d cycles in %2.1f seconds)</item>
     </plurals>
+    <string name="kakao_app_key">b0ce1e85d647723f96ffec2be4ef7367</string>
+
+
+    <string name="challenge_title">챌린지 🎖</string>
+    <string name="challenge_ongoing">진행 중인 챌린지</string>
+    <string name="challenge_introduce">까미가 제공하는 간단한 챌린지를 통해 셀프케어 습관을 길러보세요</string>
+    <string name="challenge_find">챌린지 탐색 🎨💎</string>
+    <string name="recommend">추천</string>
+    <string name="new_challenge">신규</string>
+    <string name="three_days">D-3</string>
+    <string name="week">D-7</string>
+    <string name="special">Special</string>
+
+
+
+
 </resources>
