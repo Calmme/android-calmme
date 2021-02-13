@@ -31,23 +31,30 @@ class ChallengeDetailAdapter(val items: ArrayList<ChallengeDetailData>) :  Recyc
     override fun onBindViewHolder(holder: ChallengeDetailAdapter.ViewHolder, position: Int) {
         val item = items[position]
 
-        holder.layout.setOnClickListener {
-            holder.icon.setImageResource(R.drawable.ic_challenge_play)
-            holder.layout.setBackgroundColor(Color.parseColor("#806E42"))
-            holder.description.setTextColor(Color.parseColor("#FFFFFF"))
-            holder.jelly.setImageResource(R.drawable.ic_challenge_full_jelly)
-        }
+        //test code
+//        holder.layout.setOnClickListener {
+//            holder.icon.setImageResource(R.drawable.ic_challenge_play)
+//            holder.layout.setBackgroundColor(Color.parseColor("#806E42"))
+//            holder.description.setTextColor(Color.parseColor("#FFFFFF"))
+//            holder.jelly.setImageResource(R.drawable.ic_challenge_full_jelly)
+//        }
         holder.description.text = item.description
         if(item.lock) {
             holder.icon.setImageResource(R.drawable.ic_challenge_lock)
             holder.description.setTextColor(Color.parseColor("#757575"))
         }
+        else{
+            holder.icon.setImageResource(R.drawable.ic_challenge_play)
+            holder.description.setTextColor(Color.WHITE)
+        }
 
         if(item.background == "lightBlack")
             holder.layout.setBackgroundResource(R.color.lightBlack)
+        else if(item.background == "darkGrey")
+            holder.layout.setBackgroundResource(R.color.darkGrey)
     }
 
     override fun getItemCount(): Int = items.size
 
 }
-class ChallengeDetailData(val description: String, val background: String, val lock: Boolean)
+class ChallengeDetailData(val description: String, var background: String, var lock: Boolean)
