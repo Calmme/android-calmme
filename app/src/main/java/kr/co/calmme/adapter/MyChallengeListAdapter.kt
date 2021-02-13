@@ -1,5 +1,7 @@
 package kr.co.calmme.adapter
 
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,4 +41,5 @@ class MyChallengeListAdapter(private val itemList: List<Challenge>) :
     fun setItemClickListener(itemClickListener: OnItemClickListener) {
         this.itemClickListener = itemClickListener
     }
+
 }

@@ -1,27 +1,31 @@
 package kr.co.calmme.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_challenge.*
+import kotlinx.android.synthetic.main.view_challenge.view.*
 import kr.co.calmme.ProgressDialog
 import kr.co.calmme.R
 import kr.co.calmme.adapter.FindChallengeListAdapter
 import kr.co.calmme.adapter.OngoingChallengeListAdapter
+import kr.co.calmme.localDB.MyChallenge.MyChallenge
+import kr.co.calmme.localDB.MyChallenge.MyChallengeDatabase
 import kr.co.calmme.model.Challenge
 import kr.co.calmme.model.CheckList
 import kr.co.calmme.server.Retrofit.service
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Thread.sleep
 
 
 class ChallengeFragment : Fragment() {
@@ -31,22 +35,40 @@ class ChallengeFragment : Fragment() {
     var oneWeekList: ArrayList<Challenge> = ArrayList()
     var specialList: ArrayList<Challenge> = ArrayList()
     var newList: ArrayList<Challenge> = ArrayList()
+    lateinit var adapter: OngoingChallengeListAdapter
+    lateinit var adapter2: FindChallengeListAdapter
 
+    var db: MyChallengeDatabase? = null
+    var myChallengeList = mutableListOf<MyChallenge>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_challenge, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //초기화
+        db = MyChallengeDatabase.getInstance(view.context)
+        //이전에 저장한 내용 모두 불러와서 추가하기
+        val savedMyChallenges = db!!.myChallengeDao().getAll()
+        if (savedMyChallenges.isNotEmpty()) {
+            myChallengeList.addAll(savedMyChallenges)
+        }
+
 
         star_button.setOnClickListener {
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentLayout, MyChallengeFragment())
-            transaction.addToBackStack(null)
+            transaction.addToBackStack("my_challenge")
+            transaction.commit()
+        }
+        my_page_button.setOnClickListener {
+            val transaction = activity!!.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentLayout, MyPageFragment())
+            transaction.addToBackStack("my_page")
             transaction.commit()
         }
 
@@ -87,24 +109,19 @@ class ChallengeFragment : Fragment() {
                     Log.d("list", item.Name + "/" + item.Total)
                 }
 
-                val adapter = OngoingChallengeListAdapter(list)
-                adapter.setItemClickListener(object :
-                    OngoingChallengeListAdapter.OnItemClickListener {
-                    override fun onClick(v: View, position: Int) {
-                        val item = list[position]
-//                item.title = item.title + "1"
-                        /* 챌린지 클릭 시 세부 정보 표기로 ..
-                        activity?.let {
-                            val intent = Intent(context, EntranceActivity::class.java)
-                            intent.putExtra("challenge", item)
-                            startActivity(intent)
-                        }*/
-
-                        adapter.notifyDataSetChanged()
+                for(tmp in myChallengeList) {
+                    Log.d("DEBUG", tmp.name)
+                    for(item in list) {
+                        if(item.Id.toLong() == tmp.id) {
+                            item.isScraped = true
+                        }
                     }
-                })
+                }
 
-                val adapter2 = FindChallengeListAdapter(recommendList)
+                adapter = OngoingChallengeListAdapter(list)
+                adapter.setItemClickListener(ChallengeClickListener())
+
+                adapter2 = FindChallengeListAdapter(recommendList)
                 adapter2.setItemClickListener(ChallengeClickListener())
 
                 ongoing_challenge_list.adapter = adapter
@@ -124,7 +141,6 @@ class ChallengeFragment : Fragment() {
         three_days_tab.setOnClickListener(TabClickListener())
         week_tab.setOnClickListener(TabClickListener())
         special_tab.setOnClickListener(TabClickListener())
-
     }
 
     inner class TabClickListener : View.OnClickListener {
@@ -154,27 +170,65 @@ class ChallengeFragment : Fragment() {
             }
 
             adapter2!!.setItemClickListener(ChallengeClickListener())
+            adapter2!!.setItemClickListener(ChallengeClickListener())
             find_challenge_list.adapter = adapter2
         }
     }
 
-    inner class ChallengeClickListener : FindChallengeListAdapter.OnItemClickListener {
+    // 챌린지 클릭 리스너
+    inner class ChallengeClickListener : FindChallengeListAdapter.OnItemClickListener,
+        OngoingChallengeListAdapter.OnItemClickListener {
+        private var doubleClickFlag = 0
+        private var doubleClicked = 0
+        private val CLICK_DELAY: Long = 300
         override fun onClick(v: View, position: Int) {
-            Log.d("Click", "클릭 동작")
             val item = list[position]
-//                item.title = item.title + "1"
-            /* 챌린지 클릭 시 세부 정보 표기로 ..
+            doubleClickFlag++
+            doubleClicked = 0
+            val handler = Handler()
+            val clickRunnable = Runnable {
+                doubleClickFlag = 0
+                if (doubleClicked == 0) {
+                    //item.title = item.title + "1"
+                    /* 챌린지 클릭 시 세부 정보 표기로 ..
             activity?.let {
                 val intent = Intent(context, EntranceActivity::class.java)
                 intent.putExtra("challenge", item)
                 startActivity(intent)
             }*/
+                    Toast.makeText(context, "그냥 클릭이 되었음.", Toast.LENGTH_LONG)
+                    Log.d("CLICK", "그냥 클릭이 되었음.")
+                    adapter.notifyDataSetChanged()
+                }
+            }
+            if (doubleClickFlag == 1) {
+                handler.postDelayed(clickRunnable, CLICK_DELAY)
+            } else if (doubleClickFlag == 2) {
 
-            //adapter2.notifyDataSetChanged()
+                doubleClickFlag = 0
+                doubleClicked = 1
+
+                // 해당 챌린지 즐겨찾기 효과 주기
+                for ((idx, c) in list.withIndex()) {
+                    if (c.Name == v.challenge_title.text) {
+                        var data = MyChallenge(0,"","","",0,"",0)
+                        list[idx].isScraped = true
+                        list[idx].toMyChallenge(data)
+                        Log.d("DEBUG", data.name)
+                        db?.myChallengeDao()?.insertAll(data)
+                        break
+                    }
+                }
+
+                adapter.notifyDataSetChanged()
+                adapter2.notifyDataSetChanged()
+                Log.d("CLICK", "더블 클릭이 되었음.")
+            }
         }
 
     }
 
+    // 탭 변경 시 뷰 변경 함수 (수정 필요)
     fun clipTab(clickedId: Int) {
         val tabList: List<Int> = listOf(
             R.id.recommend_tab,
@@ -201,5 +255,7 @@ class ChallengeFragment : Fragment() {
                 item.setTextColor(context!!.getColor(R.color.modernGrey))
         }
     }
+
+
 }
 

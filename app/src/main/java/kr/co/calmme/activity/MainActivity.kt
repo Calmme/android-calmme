@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,7 +27,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main) // activity_main.xml에 존재하는 리소스를 액티비티에 연결
 
 //             val navigation: BottomNavigationView = findViewById(R.id.navigation)
@@ -95,9 +97,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.challenge -> {
+//                supportFragmentManager.popBackStack()
                 val transaction = supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentLayout, ChallengeFragment())
                 transaction.commit()
+//                supportFragmentManager.popBackStack("my_challenge", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                supportFragmentManager.popBackStack("my_page", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 return true
             }
             R.id.analysis -> {

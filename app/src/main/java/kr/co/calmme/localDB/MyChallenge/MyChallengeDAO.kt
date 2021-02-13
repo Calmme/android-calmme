@@ -1,4 +1,4 @@
-package kr.co.calmme.localDB
+package kr.co.calmme.localDB.MyChallenge
 
 import androidx.room.Dao
 import androidx.room.Delete

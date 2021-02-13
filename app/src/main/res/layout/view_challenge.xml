@@ -5,6 +5,18 @@
     android:layout_width="192dp"
     android:layout_height="match_parent">
 
+
+    <ImageView
+        android:id="@+id/star"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_margin="7dp"
+        android:translationZ="1dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_yellow_star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ImageView
         android:id="@+id/cover_image"
         android:layout_width="match_parent"

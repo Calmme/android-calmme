@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.fragment_challenge.*
 import kotlinx.android.synthetic.main.fragment_my_challenge.*
-import kotlinx.android.synthetic.main.fragment_my_challenge.my_page_button
+import kotlinx.android.synthetic.main.fragment_my_challenge.star_button
 import kr.co.calmme.R
 
-class MyChallengeFragment : Fragment() {
+class MyPageFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_my_challenge, container, false)
+        return inflater.inflate(R.layout.fragment_my_page, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,7 +25,6 @@ class MyChallengeFragment : Fragment() {
         back_button.setOnClickListener {
             activity!!.onBackPressed()
         }
-
     }
 
 

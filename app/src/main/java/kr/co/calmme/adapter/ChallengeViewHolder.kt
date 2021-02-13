@@ -1,5 +1,7 @@
 package kr.co.calmme.adapter
 
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_challenge.view.*
@@ -10,6 +12,7 @@ class ChallengeViewHolder(v: View) : RecyclerView.ViewHolder(v) {
     var view: View = v
 
     fun bind(item: Challenge) {
+
         view.view.challenge_title.text = item.Name
 
         if (item.Total <= 3) {
@@ -26,5 +29,12 @@ class ChallengeViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         if (item.completeNum > 0)
             view.view.totalCount.text = item.completeNum.toString()
+
+        if(item.isScraped)
+            view.view.star.visibility = View.VISIBLE
+        else
+            view.view.star.visibility = View.INVISIBLE
+
     }
+
 }

@@ -1,4 +1,4 @@
-package kr.co.calmme.localDB
+package kr.co.calmme.localDB.MyChallenge
 
 import android.content.Context
 import androidx.room.Database
