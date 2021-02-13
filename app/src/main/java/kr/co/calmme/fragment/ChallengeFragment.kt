@@ -1,5 +1,6 @@
 package kr.co.calmme.fragment
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -12,6 +13,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_progress.*
 import kotlinx.android.synthetic.main.fragment_challenge.*
 import kotlinx.android.synthetic.main.view_challenge.view.*
 import kr.co.calmme.ProgressDialog
@@ -170,7 +172,6 @@ class ChallengeFragment : Fragment() {
             }
 
             adapter2!!.setItemClickListener(ChallengeClickListener())
-            adapter2!!.setItemClickListener(ChallengeClickListener())
             find_challenge_list.adapter = adapter2
         }
     }
@@ -204,7 +205,6 @@ class ChallengeFragment : Fragment() {
             if (doubleClickFlag == 1) {
                 handler.postDelayed(clickRunnable, CLICK_DELAY)
             } else if (doubleClickFlag == 2) {
-
                 doubleClickFlag = 0
                 doubleClicked = 1
 
@@ -255,7 +255,5 @@ class ChallengeFragment : Fragment() {
                 item.setTextColor(context!!.getColor(R.color.modernGrey))
         }
     }
-
-
 }
 

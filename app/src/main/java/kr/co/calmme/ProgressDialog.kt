@@ -2,8 +2,10 @@ package kr.co.calmme
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.ColorDrawable
 import android.view.Window
+import kotlinx.android.synthetic.main.activity_progress.*
 import java.lang.Thread.sleep
 
 class ProgressDialog(context: Context) {
@@ -16,6 +18,9 @@ class ProgressDialog(context: Context) {
         dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(false)
         dialog.show()
+        val frameAnimation: AnimationDrawable =
+            dialog.loading_icon.background as AnimationDrawable
+        frameAnimation.start()
     }
 
     fun finish() {
