@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/challenge_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="43dp"
+    android:background="#616161"
+    android:layout_marginBottom="7dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/challenge_item_icon"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintHorizontal_weight="0.1"
+        android:src="@drawable/ic_challenge_play"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/challenge_item_text"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/challenge_item_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="0.8"
+        android:layout_marginLeft="12dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:text="1일차, 3분 나를 위한 명상dddddddddddddddddddddddd"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/challenge_item_icon"
+        app:layout_constraintRight_toLeftOf="@id/challenge_item_jelly"/>
+    <ImageView
+        android:id="@+id/challenge_item_jelly"
+        android:layout_width="0dp"
+        android:layout_height="13dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="14dp"
+        app:layout_constraintHorizontal_weight="0.1"
+        android:src="@drawable/ic_challenge_empty_jelly"
+        app:layout_constraintLeft_toRightOf="@id/challenge_item_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
