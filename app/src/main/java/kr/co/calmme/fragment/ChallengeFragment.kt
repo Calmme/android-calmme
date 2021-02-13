@@ -43,6 +43,13 @@ class ChallengeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        star_button.setOnClickListener {
+            val transaction = activity!!.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentLayout, MyChallengeFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
         val layoutManager = GridLayoutManager(this.context, 2)
         layoutManager.orientation = GridLayoutManager.HORIZONTAL
         ongoing_challenge_list.layoutManager = layoutManager
@@ -184,7 +191,6 @@ class ChallengeFragment : Fragment() {
         for ((cnt, item) in viewList.withIndex()) {
             if (clickedId == tabList[cnt])
                 item.setCardBackgroundColor(context!!.getColor(R.color.middleGrey))
-               // item.backgroundTintList(context!!.getColor(R.color.middleGrey))
             else
                 item.setCardBackgroundColor(context!!.getColor(R.color.lightBlack))
         }

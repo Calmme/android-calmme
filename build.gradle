@@ -26,6 +26,8 @@ buildscript {
 allprojects {
     repositories {
         google()
+        // RoomDB 설정
+        maven { url "https://maven.google.com" }
         jcenter()
         //카카오 SDK repository 설정
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }

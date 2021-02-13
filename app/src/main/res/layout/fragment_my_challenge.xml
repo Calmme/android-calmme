@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MyChallengeFragment">
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="6dp"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/my_challenge_title"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="6dp"
+        android:text="@string/my_challenge_title"
+        android:textColor="@color/deepGrey"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/back_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/star_button"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="6dp"
+        android:src="@drawable/ic_yellow_star"
+        app:layout_constraintEnd_toStartOf="@id/search_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/search_button"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/ic_search"
+        app:layout_constraintEnd_toStartOf="@id/my_page_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/my_page_button"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/ic_temp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_challenge_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_challenge_title"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
