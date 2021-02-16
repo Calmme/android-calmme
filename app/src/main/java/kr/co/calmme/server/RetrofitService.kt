@@ -1,13 +1,9 @@
 package kr.co.calmme.server
 
-import kr.co.calmme.model.Challenge
-import kr.co.calmme.model.CheckList
+import kr.co.calmme.model.*
 import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface RetrofitService {
 
@@ -29,4 +25,9 @@ interface RetrofitService {
      */
     @GET("contents/list")
     fun onGoingChallengeList(): Call<CheckList>
+
+    @GET("contents/detail")
+    fun getChallengeDetail(
+        @Query("id") id : Int
+    ) : Call<ChallengeDetailList>
 }

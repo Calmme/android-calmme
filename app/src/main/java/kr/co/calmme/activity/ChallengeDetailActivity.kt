@@ -10,18 +10,24 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.skydoves.balloon.*
 import kr.co.calmme.ChallengeDetailAdapter
 import kr.co.calmme.ChallengeDetailData
 import kr.co.calmme.R
-import kr.co.calmme.model.Challenge
-import kotlin.collections.ArrayList
+import kr.co.calmme.model.*
+import kr.co.calmme.server.Retrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class ChallengeDetailActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var challengeData : Challenge
-    private val  recyclerItems = ArrayList<ChallengeDetailData>()
     private lateinit var recyclerAdapter: ChallengeDetailAdapter
+    private lateinit var challengeDetail: ChallengeDetail
     private var isStart = false
+    private val  recyclerItems = ArrayList<ChallengeDetailData>()
     private val TAG = "ChallengeDetailActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +50,44 @@ class ChallengeDetailActivity : AppCompatActivity(), View.OnClickListener{
     fun getExtra(){
         if(intent.hasExtra("challenge")){
             challengeData = intent.getSerializableExtra("challenge") as Challenge
-            Log.e(TAG,"\ncategory : ${challengeData.Category}\nCreatedAt : ${challengeData.CreatedAt}\nName : ${challengeData.Name}\nID : ${challengeData.Id}")
-            Log.e(TAG,"\nRecommend : ${challengeData.Recommend}\nTotal : ${challengeData.Total}\nCompleteNum : ${challengeData.completeNum}")
+            Log.e(
+                TAG,
+                "\ncategory : ${challengeData.Category}\nCreatedAt : ${challengeData.CreatedAt}\nName : ${challengeData.Name}\nID : ${challengeData.Id}\nRecommend : ${challengeData.Recommend}\nTotal : ${challengeData.Total}\nCompleteNum : ${challengeData.completeNum}"
+            )
         }
     }
 
     fun setDisplay(){
+        //정상적으로 intent 수신시
         if(challengeData != null){
+            //title 설정
             findViewById<TextView>(R.id.challenge_detail_name).text = challengeData.Name
+            //ProgressBar 설정
             setProgressBar(challengeData.completeNum, challengeData.Total)
+            //recylcerview 설정
             setRecylerView(challengeData.Total)
+
+            //서버로부터 디테일정보 수신
+            val call = Retrofit.service.getChallengeDetail(challengeData.Id)
+            call.enqueue(object : Callback<ChallengeDetailList> {
+                override fun onResponse(
+                    call: Call<ChallengeDetailList>,
+                    response: Response<ChallengeDetailList>
+                ) {
+                    Log.e(TAG, response.body().toString())
+                    challengeDetail = response.body()!!.challenge
+
+                    //메인 이미지 설정
+                    val mainImage = findViewById<ImageView>(R.id.challenge_detail_image)
+                    mainImage.load("http://${challengeDetail.Image}")
+                    mainImage.scaleType = ImageView.ScaleType.FIT_XY
+                }
+
+                override fun onFailure(call: Call<ChallengeDetailList>, t: Throwable) {
+                    Log.e(TAG, t.message.toString())
+                }
+
+            })
             //button start 여부 처리필요
         }
     }
@@ -80,7 +114,7 @@ class ChallengeDetailActivity : AppCompatActivity(), View.OnClickListener{
         balloon.showAlignBottom(view)
     }
 
-    fun setRecylerView(total : Int){
+    fun setRecylerView(total: Int){
 
         for(i in 0 until total)
             recyclerItems.add(ChallengeDetailData("2일차, 3분 나를 위한 명상", "lightBlack", true))
@@ -92,7 +126,7 @@ class ChallengeDetailActivity : AppCompatActivity(), View.OnClickListener{
         recyclerView.layoutManager = lm
     }
 
-    fun setProgressBar(complete : Int, total : Int){
+    fun setProgressBar(complete: Int, total: Int){
         val progress = intArrayOf(
             R.id.challenge_detail_progress1,
             R.id.challenge_detail_progress2,
@@ -107,7 +141,7 @@ class ChallengeDetailActivity : AppCompatActivity(), View.OnClickListener{
             findViewById<ImageView>(progress[i]).visibility = View.GONE
         }
         for(i in 0 until complete){
-            Log.e(TAG,"TEST")
+            Log.e(TAG, "TEST")
             findViewById<ImageView>(progress[i]).setBackgroundColor(Color.parseColor("#FFDF8E"))
         }
     }
@@ -115,7 +149,11 @@ class ChallengeDetailActivity : AppCompatActivity(), View.OnClickListener{
     fun clickStateButton(){
         if(isStart == false){
             //progressbar 1칸 업데이트, 첫번째 컨텐츠 활성화
-            findViewById<ImageView>(R.id.challenge_detail_progress1).setBackgroundColor(Color.parseColor("#FFDF8E"))
+            findViewById<ImageView>(R.id.challenge_detail_progress1).setBackgroundColor(
+                Color.parseColor(
+                    "#FFDF8E"
+                )
+            )
             findViewById<Button>(R.id.challenge_detail_state).setText("챌린지 도전중")
             recyclerItems[0].background = "darkGrey"
             recyclerItems[0].lock = false
@@ -123,4 +161,7 @@ class ChallengeDetailActivity : AppCompatActivity(), View.OnClickListener{
             isStart = true
         }
     }
+
 }
+
+

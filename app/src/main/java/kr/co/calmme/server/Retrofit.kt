@@ -6,8 +6,8 @@ import retrofit2.Retrofit
 //static 싱글톤
 object Retrofit {
     //BASE URL
-//    private const val BASE_URL_TEST = "http://calmme.kr:3000/"
-    private const val BASE_URL_TEST = "http://codejune.iptime.org:3000/"
+    private const val BASE_URL_TEST = "http://calmme.kr:3000/"
+ //   private const val BASE_URL_TEST = "http://codejune.iptime.org:3000/"
 
     //api 통신
     private val retrofit = Retrofit.Builder()
